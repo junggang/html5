@@ -1,0 +1,119 @@
+html,body
+{
+    width: 100%; height: 100%;
+}
+.navbar-custom
+{
+    background:#000000;
+}
+.starter-template
+{
+    padding: 40px 15px; text-align: center;
+}
+.navbar-collapse-custom
+{
+    text-align: center;
+}
+.image-center
+{
+    display: block;
+    margin-left: auto; margin-right: auto;
+
+}
+.pages
+{
+    text-align: center;
+    padding: 100px;
+    display: table;
+    width: 100%;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.mainpage
+{
+    display: table;
+    padding: 50px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background: url('../images/congruent_pentagon_full_2.png') center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.introCustom
+{
+    color: black;
+    background: white no-repeat center center fixed;
+}
+.description
+{
+    color: white;
+    background: #3498db no-repeat center center fixed;
+}
+.monsterTitle
+{
+    height: 400px;
+    background: url('../images/congruent_pentagon_full_2.png') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.monsterDes
+{
+    color: black;
+    background: white no-repeat center center fixed;
+}
+
+.start
+{
+    color: white;
+    background: #3498db no-repeat center center fixed;
+}
+
+.jumbotron-custom {
+    max-width: 300px; padding:20px; margin: 0 auto 20px;
+    margin-top:50px;
+    background-color: black; color: white; -webkit-border-radius:
+    5px; -moz-border-radius: 5px; border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05); -moz-box-shadow:
+    0 1px 2px rgba(0,0,0,.05); box-shadow: 0 1px 2px
+    rgba(0,0,0,.05);
+}
+.vert-text
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}     
+.vert-text h1
+{
+  padding: 0;
+  margin: 0;
+  font-size: 4.5em;
+  font-weight: 700;
+}
+.p-custom
+{
+    margin:0;
+}
+.bigTitle
+{
+    font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+}
+.panel-group-custom
+{
+    width:1000px;
+    margin:0 auto;
+}
+.col-sm-9-custom
+{
+    width:100%;
+}

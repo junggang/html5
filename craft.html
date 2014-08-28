@@ -12,6 +12,14 @@
 		startY = 0;
 		var img;
 		
+		
+		
+		var stickerSources = {
+			zigzag: 'images/sticker_zigzag.png',
+			flower: 'images/sticker_flower.png'
+		      };
+		      
+		
 		var mine =
 		{
 			strokestyle : "black",
@@ -29,7 +37,23 @@
                 startY = e.offsetY;
 		
             }
-	    	      
+	    function loadStickers(stickerSources, callback) {
+		var images = {};
+		var loadedStickers = 0;
+		var stickerNum = 0;
+		for(var src in stickerSources) {
+		  stickerNum++;
+		}
+		for(var src in stickerSources) {
+		  images[src] = new Image();
+		  images[src].onload = function() {
+		    if(++loadedStickers >= stickerNum) {
+		      callback(images);
+		    }
+		  };
+		  images[src].src = stickerSources[src];
+		}
+	      }
             
             function drawLine(e) {
                 if (clicked == true) {
@@ -38,25 +62,25 @@
                     console.log(fx,fy);
                     
 			var can = document.getElementById('myCanvas');
-                        var ctx = can.getContext('2d');
-                        ctx.lineCap ="round";
-			ctx.lineJoin="round";
+                        var context = can.getContext('2d');
+                        context.lineCap ="round";
+			context.lineJoin="round";
 			
 			//img=document.getElementById("colorPick");
-			pat=ctx.createPattern($('colorPick'),"repeat");
+			pat=context.createPattern($('colorPick'),"repeat");
 			
-			ctx.strokeStyle = mine.strokestyle;
+			context.strokeStyle = mine.strokestyle;
 			console.log(mine.strokestyle);
 			
-			ctx.beginPath();
+			context.beginPath();
 			
-			ctx.lineWidth = mine.linewidth;
-                        ctx.moveTo (startX,startY);
-                        ctx.lineTo (fx,fy);
+			context.lineWidth = mine.linewidth;
+                        context.moveTo (startX,startY);
+                        context.lineTo (fx,fy);
                         startX = fx;
                         startY = fy;
-                        ctx.closePath();
-                        ctx.stroke();
+                        context.closePath();
+                        context.stroke();
 			
 			
 			//save current Step
@@ -95,7 +119,7 @@
 	    
 	    function saveCanvas() {
 		var can = document.getElementById('myCanvas');
-		//var ctx = can.getContext('2d');
+		//var context = can.getContext('2d');
 		var dataURL = can.toDataURL();
 		var backArea = $('savePop').childNodes[1];
 		var saveBTN = $('imgPop').querySelector('a');
@@ -109,15 +133,15 @@
 		saveBTN.href=dataURL;
 		//prompt로 가능
 		saveBTN.download="image";
-		//ctx.save();
+		//context.save();
 		console.log("saved");
 		
 	    }
 	    
 	    function restoreCanvas() {
 		var can = document.getElementById('myCanvas');
-		var ctx = can.getContext('2d');
-		ctx.restore();
+		var context = can.getContext('2d');
+		context.restore();
 		console.log("saved");
 	    }
 	    
@@ -173,14 +197,14 @@
 		function clearCanvas() {
 			//code
 			var can = document.getElementById('myCanvas');
-                        var ctx = can.getContext('2d');
+                        var context = can.getContext('2d');
 			
-			ctx.clearRect(0,0,can.width,can.height);
+			context.clearRect(0,0,can.width,can.height);
 		}
                 
                 function showPreview(){  
                     var can = document.getElementById('myCanvas');
-                    //var ctx = can.getContext('2d');
+                    //var context = can.getContext('2d');
                     var dataURL = can.toDataURL();
                     var backArea = $('savePop').childNodes[1];
                     
@@ -188,10 +212,11 @@
                     //document.body.style.backgroundImage="url('"+dataURL+"')";;
                 }
             window.addEventListener('load',function(){
-		
             var Ele = document.getElementById('myCanvas');
             var bar = document.getElementById('pen_range');
 	    var hex = document.getElementsByClassName('colorHex');
+                        var context = Ele.getContext('2d');
+		
 	   
 	    
             init();
@@ -209,6 +234,10 @@
 	    $('clearbtn').addEventListener('click',clearCanvas,false);
 	    console.log(mine.stroketype);
             
+	     loadStickers(stickerSources, function(images) {
+		context.drawImage(images.zigzag, 100, 30, 200, 137);
+		context.drawImage(images.flower, 350, 55, 93, 104);
+	      });
             
             },false)
 	</script>

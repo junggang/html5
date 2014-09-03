@@ -288,6 +288,5 @@ window.addEventListener('load',function(){
                 //context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
                 //context.drawImage(images.sticker_flower, 350, 55, 93, 104);
         });
-        mask();        
 },false);
 

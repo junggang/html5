@@ -3,7 +3,10 @@ startX = 0;
 startY = 0;
 canvasWidth = 500;
 canvasHeight = 500;
-var img;		
+var img;
+
+var renderer, scene, camera, mesh;
+var loader;
          
 
 var mine =
@@ -252,14 +255,65 @@ function clearCanvas()
                 
 function showPreview(){  
         var can = document.getElementById('myCanvas');
-        //var context = can.getContext('2d');
         var dataURL = can.toDataURL();
         var backArea = $('savePop').childNodes[1];
         
-        document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
-        //document.body.style.backgroundImage="url('"+dataURL+"')";;
+        //document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
+	prepareModel();
+	drawModel();
 }
 
+
+//-----3D------//
+function init3D()
+{
+        renderer = new THREE.WebGLRenderer();
+	renderer.setSize(canvasWidth, canvasHeight);
+	document.getElementById('preview').appendChild(renderer.domElement);
+			
+	scene = new THREE.Scene();
+	
+	var aspect = canvasWidth / canvasHeight;
+	camera = new THREE.PerspectiveCamera(50, aspect, 1, 10000);
+	camera.position.z = 1000;
+			  
+			  
+	scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+	var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
+	directionalLight.position.x = 0;
+	directionalLight.position.y = 100;
+	directionalLight.position.z = 500;
+	directionalLight.position.normalize();
+	scene.add( directionalLight );
+}
+
+function prepareModel()
+{
+	loader = new THREE.ColladaLoader();
+	console.log(loader);
+	loader.options.convertUpAxis = true;
+			      
+	loader.load( 'model/test.dae', function ( collada ) {
+	var dae = collada.scene;
+				  //var skin = collada.skins[ 0 ];
+	dae.position.set(0,0,0);//x,z,y- if you think in blender dimensions ;)
+	dae.scale.set(100,100,100);
+	dae.rotation.set(100,30,0);
+	
+	scene.add(dae);
+	
+	});
+}
+
+function drawModel()
+{
+	requestAnimationFrame(drawModel);
+			
+	// mesh.rotation.x += .01;
+	// mesh.rotation.y += .02;
+	renderer.render(scene, camera);
+}
 
 
 window.addEventListener('load',function(){
@@ -269,6 +323,7 @@ window.addEventListener('load',function(){
         var context = Ele.getContext('2d');
         
         init();
+	init3D();
         
         showColorPalette();
         showColorHexes();
@@ -288,6 +343,5 @@ window.addEventListener('load',function(){
                 //context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
                 //context.drawImage(images.sticker_flower, 350, 55, 93, 104);
         });
-        mask();        
 },false);
 

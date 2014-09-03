@@ -273,18 +273,16 @@ function init3D()
 			
 	scene = new THREE.Scene();
 	
-	var aspect = canvasWidth / canvasHeight;
-	camera = new THREE.PerspectiveCamera(50, aspect, 1, 10000);
-	camera.position.z = 1000;
-			  
-			  
-	scene.add( new THREE.AmbientLight( 0xcccccc ) );
+	camera = new THREE.PerspectiveCamera(45, (canvasWidth / canvasHeight), 1, 1000);
+	camera.position.set(0,5,30);
+	camera.lookAt( scene.position );	
+	renderer.setClearColorHex(0xffffff, 1);
+	
+	scene.add( new THREE.AmbientLight( 0x404040 ) );
 
-	var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
-	directionalLight.position.x = 0;
-	directionalLight.position.y = 100;
-	directionalLight.position.z = 500;
-	directionalLight.position.normalize();
+	var directionalLight = new THREE.PointLight(0xffffff,0.8 );
+
+	directionalLight.position.set(-100,200,100);
 	scene.add( directionalLight );
 }
 
@@ -297,9 +295,8 @@ function prepareModel()
 	loader.load( 'model/test.dae', function ( collada ) {
 	var dae = collada.scene;
 				  //var skin = collada.skins[ 0 ];
-	dae.position.set(0,0,0);//x,z,y- if you think in blender dimensions ;)
-	dae.scale.set(100,100,100);
-	dae.rotation.set(100,30,0);
+	dae.position.set(0,-5,0);//x,z,y- if you think in blender dimensions
+	dae.rotation.set(0,0,0);
 	
 	scene.add(dae);
 	

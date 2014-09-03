@@ -5,43 +5,76 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.71.0 commit date:2014-06-25, commit time:18:36, hash:9337574</authoring_tool>
     </contributor>
-    <created>2014-09-04T01:13:07</created>
-    <modified>2014-09-04T01:13:07</modified>
+    <created>2014-09-04T01:52:00</created>
+    <modified>2014-09-04T01:52:00</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
+  <library_effects>
+    <effect id="Material_001-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.03320379 0.1797086 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.7228571 0.7228571 0.7228571 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Material_001-material" name="Material_001">
+      <instance_effect url="#Material_001-effect"/>
+    </material>
+  </library_materials>
   <library_geometries>
-    <geometry id="Cylinder-mesh" name="Cylinder">
+    <geometry id="Cone-mesh" name="Cone">
       <mesh>
-        <source id="Cylinder-mesh-positions">
-          <float_array id="Cylinder-mesh-positions-array" count="30">0 1 -1 0 1 1 0.9510565 0.309017 -1 0.9510565 0.309017 1 0.5877852 -0.8090171 -1 0.5877852 -0.8090171 1 -0.5877854 -0.809017 -1 -0.5877854 -0.809017 1 -0.9510565 0.3090171 -1 -0.9510565 0.3090171 1</float_array>
+        <source id="Cone-mesh-positions">
+          <float_array id="Cone-mesh-positions-array" count="18">0 5 -0.01179963 4.755283 1.545085 -0.01179963 2.938926 -4.045085 -0.01179963 -2.938927 -4.045085 -0.01179963 -4.755282 1.545086 -0.01179963 0 0 9.988202</float_array>
           <technique_common>
-            <accessor source="#Cylinder-mesh-positions-array" count="10" stride="3">
+            <accessor source="#Cone-mesh-positions-array" count="6" stride="3">
               <param name="X" type="float"/>
               <param name="Y" type="float"/>
               <param name="Z" type="float"/>
             </accessor>
           </technique_common>
         </source>
-        <source id="Cylinder-mesh-normals">
-          <float_array id="Cylinder-mesh-normals-array" count="48">0.5877853 0.809017 0 0.9510564 -0.309017 0 0 -1 0 -0.5877852 0.8090171 0 -0.5877852 0.8090171 0 -0.9510565 -0.3090168 0 0 0 -1 0.5877853 0.809017 0 0.9510564 -0.309017 0 0 -1 0 0 0 1 0 0 1 0 0 1 -0.9510565 -0.3090168 0 0 0 -1 0 0 -1</float_array>
+        <source id="Cone-mesh-normals">
+          <float_array id="Cone-mesh-normals-array" count="24">-0.8816565 -0.2864674 0.3749908 0.5448938 0.7499819 0.3749909 0 -0.9270285 0.3749909 -0.5448936 0.7499819 0.3749909 0.8816565 -0.2864676 0.3749908 0 0 -1 0 0 -1 0 0 -1</float_array>
           <technique_common>
-            <accessor source="#Cylinder-mesh-normals-array" count="16" stride="3">
+            <accessor source="#Cone-mesh-normals-array" count="8" stride="3">
               <param name="X" type="float"/>
               <param name="Y" type="float"/>
               <param name="Z" type="float"/>
             </accessor>
           </technique_common>
         </source>
-        <vertices id="Cylinder-mesh-vertices">
-          <input semantic="POSITION" source="#Cylinder-mesh-positions"/>
+        <vertices id="Cone-mesh-vertices">
+          <input semantic="POSITION" source="#Cone-mesh-positions"/>
         </vertices>
-        <polylist count="16">
-          <input semantic="VERTEX" source="#Cylinder-mesh-vertices" offset="0"/>
-          <input semantic="NORMAL" source="#Cylinder-mesh-normals" offset="1"/>
-          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
-          <p>0 0 1 0 3 0 2 1 3 1 5 1 4 2 5 2 7 2 0 3 8 3 1 3 8 4 9 4 1 4 6 5 7 5 9 5 2 6 6 6 8 6 2 7 0 7 3 7 4 8 2 8 5 8 6 9 4 9 7 9 5 10 3 10 1 10 7 11 5 11 9 11 5 12 1 12 9 12 8 13 6 13 9 13 8 14 0 14 2 14 2 15 4 15 6 15</p>
+        <polylist material="Material_001-material" count="8">
+          <input semantic="VERTEX" source="#Cone-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cone-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 </vcount>
+          <p>3 0 5 0 4 0 0 1 5 1 1 1 2 2 5 2 3 2 4 3 5 3 0 3 1 4 5 4 2 4 1 5 3 5 0 5 1 6 2 6 3 6 3 7 4 7 0 7</p>
         </polylist>
       </mesh>
     </geometry>
@@ -49,9 +82,15 @@
   <library_controllers/>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="Cylinder" name="Cylinder" type="NODE">
-        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 1.009771 0 0 0 1</matrix>
-        <instance_geometry url="#Cylinder-mesh"/>
+      <node id="Cone" name="Cone" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#Cone-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material_001-material" target="#Material_001-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
       </node>
     </visual_scene>
   </library_visual_scenes>

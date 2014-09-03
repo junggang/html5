@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>test</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/sketch.css">
+		
+		<script>
+			clicked = false;
+			startX = 0;
+			startY = 0;
+			var img;		
+			
+			var stickerSources = 
+			{
+				sticker_zigzag: 'images/sticker_zigzag.png',
+				sticker_flower: 'images/sticker_flower.png'
+			};
+				  
+			
+			var mine =
+			{
+				strokestyle : "black",
+				linewidth : 10,
+				
+				stepArray : new Array(),
+				step : 0,
+				isPen : true
+			}
+				
+			function clickStatus(e) 
+			{
+				clicked = true;
+				console.log(clicked);
+				startX = e.offsetX;
+				startY = e.offsetY;
+			}
+
+			function loadStickers(stickerSources, callback) 
+			{			
+				var images = {};
+				var loadedStickers = 0;
+				var stickerNum = 0;
+				for(var src in stickerSources) 
+				{
+				  stickerNum++;
+				}
+				for(var src in stickerSources) 
+				{
+				  	images[src] = new Image();
+				  	images[src].onload = function() 
+				  	{
+				  		if(++loadedStickers >= stickerNum) 
+				  		{
+				  			callback(images);
+				  		}
+				  	};
+			  	images[src].src = stickerSources[src];
+				}
+			}	 
+
+			function drawLine(e) 
+			{
+				if (clicked == true) 
+				{
+					fx = e.offsetX;
+					fy = e.offsetY;
+					console.log(fx,fy);
+					
+				var can = document.getElementById('myCanvas');
+				var context = can.getContext('2d');
+				context.lineCap ="round";
+				context.lineJoin="round";
+			
+				//img=document.getElementById("colorPick");
+				pat=context.createPattern($('colorPick'),"repeat");
+				
+				context.strokeStyle = mine.strokestyle;
+				console.log(mine.strokestyle);
+				
+				context.beginPath();
+				
+				context.lineWidth = mine.linewidth;
+				context.moveTo (startX,startY);
+				context.lineTo (fx,fy);
+				startX = fx;
+				startY = fy;
+				context.closePath();
+				context.stroke();
+				//save current Step
+				//mine.stepArray[mine.step] = can.toDataURL();
+				//console.log(mine.stepArray[mine.step]);
+				//mine.step = mine.step + 1;
+				}
+			}
+			//removeEventHandeler 를 쓸 수 있다. mousedown/up만 쓸 수 있겠지~
+			
+			
+			function endCoordinate(e) 
+			{
+				clicked = false;
+				console.log(clicked);
+			}
+			
+			
+			function changeColor(e) 
+			{
+				//code
+				var ele = e.target;
+				if (mine.isPen == true) 
+				{
+					mine.strokestyle = ele.style.background;
+					//e.target.style.border = "4px solid #6A4A3C";
+				}
+				else
+				{
+					$('colorPick').src=ele.style.backgroundImage.slice(4, -1);
+					console.log($('colorPick').src);
+					mine.strokestyle = pat;
+					//img=document.getElementById("colorPick");
+				}
+			}
+			
+			function saveCanvas() 
+			{
+				var can = document.getElementById('myCanvas');
+				//var context = can.getContext('2d');
+				var dataURL = can.toDataURL();
+				var backArea = $('savePop').childNodes[1];
+				var saveBTN = $('imgPop').querySelector('a');
+				
+				console.log(saveBTN);
+				
+				$('canvasImg').src = dataURL;
+				showPop("savePop");
+				
+				backArea.addEventListener('click',function()
+					{ $('savePop').style.display="none";},false);
+				saveBTN.href=dataURL;
+				//prompt로 가능
+				saveBTN.download="image";
+				//context.save();
+				console.log("saved");
+			}
+			
+			function restoreCanvas() 
+			{
+				var can = document.getElementById('myCanvas');
+				var context = can.getContext('2d');
+				context.restore();
+				console.log("saved");
+			}
+			
+			function showPop(category) 
+			{
+				$(category).style.display="";
+			}
+				
+			function $(ele) 
+			{
+				return document.getElementById(ele);
+			}
+			
+			function init() 
+			{
+				//초기화
+				c=document.getElementById("myCanvas");
+				var first=c.getContext("2d");
+				first.fillStyle = "white";
+				first.fillRect(0,0,550,440);
+			}
+			
+			function postCanvasToURL() 
+			{
+				var can = document.getElementById('myCanvas');
+				var data = can.toDataURL("image/png");
+				var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
+				var decodedPng = Base64Binary.decode(encodedPng);
+			}
+
+			function showColorPalette() 
+			{
+				var str= "";
+				for (var i = 0;i<8;i++) 
+				{
+					str = str.concat("<div class='colorhex' ");
+					str = str.concat("style='background:white'></div>");
+				}
+				$('colorHex').innerHTML = str;
+			}
+			  
+			function showColorHexes() 
+			{
+				var request = new XMLHttpRequest();
+				request.open("GET", "colorHex.json",true);
+				request.send(null);
+				var nodes = document.getElementById('colorHex').childNodes;
+				request.onreadystatechange = function(){
+					if (request.readyState == 4 && request.status == 200) 
+					{
+						var sResult = request.responseText;
+						var obj = JSON.parse(sResult);
+						for (var i=0;i<obj.length;i++) 
+						{
+							console.log(obj[i]);
+							nodes[i].style.background=obj[i];
+						}
+					}
+				}
+			}
+			
+			function clearCanvas() 
+			{
+				//code
+				var can = document.getElementById('myCanvas');
+				var context = can.getContext('2d');
+				
+				context.clearRect(0,0,can.width,can.height);
+			}
+					
+			function showPreview(){  
+				var can = document.getElementById('myCanvas');
+				//var context = can.getContext('2d');
+				var dataURL = can.toDataURL();
+				var backArea = $('savePop').childNodes[1];
+				
+				document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
+				//document.body.style.backgroundImage="url('"+dataURL+"')";;
+			}
+
+			window.addEventListener('load',function(){
+				var Ele = document.getElementById('myCanvas');
+				var bar = document.getElementById('pen_range');
+				var hex = document.getElementsByClassName('colorHex');
+				var context = Ele.getContext('2d');
+				
+				init();
+				showColorPalette();
+				showColorHexes();
+				Ele.addEventListener('mousedown',clickStatus,false);
+				Ele.addEventListener('mouseout',endCoordinate,false);
+				Ele.addEventListener('mouseup',endCoordinate,false);
+				Ele.addEventListener('mousemove',drawLine,false);
+				$('colorHex').addEventListener('mousedown',changeColor,false);
+				
+			   
+				$('savebtn').addEventListener('click',saveCanvas,false);
+				$('showbtn').addEventListener('click',showPreview,false);
+				$('clearbtn').addEventListener('click',clearCanvas,false);
+				console.log(mine.stroketype);
+					
+				loadStickers(stickerSources, function(images) {
+				context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
+				//context.drawImage(images.sticker_flower, 350, 55, 93, 104);
+				});
+				 
+				var imageObj = new Image();
+				imageObj.onload = function()
+				{
+					context.drawImage(imageObj, 350, 55, 93, 104);
+				}
+
+				imageObj.src = "images/sticker_flower.png";
+			},false);
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">	
+			<div id="contents">
+				<div id="canvas_area">
+					 <canvas id="myCanvas" width=500 height=500></canvas>
+				</div>
+				
+				<div id="tool_area">
+					<div id="color_picker">
+						<div id="colorHex"></div>	
+									</div>
+					
+					<div id="stickers">
+						<p><span id="sticker_flower">FLOWER</span>	   <span id="sticker_zigzag">ZIGZAG</span></p>
+					</div>
+									
+					<div id="savebtn" class="button">save</div>
+					<div id="showbtn" class="button">Preview</div>
+					<div id="clearbtn" class="button">clear</div>
+									
+				</div>
+			</div>
+		</div>
+			
+		<div id="preview">
+			
+		</div>
+		
+		<img id ="colorPick" src="images/color0.png" style="visibility: hidden"/>
+		<div id="savePop" style="position: absolute;left:0;top:0;width: 100%;height:100%;display: none">
+			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
+			<div id="imgPop">
+				<img id="canvasImg" src="" class="popImg"/>
+				<a href=""><div class="button" style="margin-left: 175px;">SAVE!</div></a>
+			</div>	
+		</div>
+		
+		<a href="#" onclick="postCanvasToURL()">
+		  </a>
+		
+	</body>
+
+</html>
+

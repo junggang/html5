@@ -14,9 +14,10 @@
 		
 		
 		
+		
 		var stickerSources = {
-			zigzag: 'images/sticker_zigzag.png',
-			flower: 'images/sticker_flower.png'
+			sticker_zigzag: 'images/sticker_zigzag.png',
+			sticker_flower: 'images/sticker_flower.png'
 		      };
 		      
 		
@@ -235,9 +236,16 @@
 	    console.log(mine.stroketype);
             
 	     loadStickers(stickerSources, function(images) {
-		context.drawImage(images.zigzag, 100, 30, 200, 137);
-		context.drawImage(images.flower, 350, 55, 93, 104);
+		context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
+		//context.drawImage(images.sticker_flower, 350, 55, 93, 104);
 	      });
+	     
+	     var imageObj = new Image();
+	     imageObj.onload = function(){
+		context.drawImage(imageObj, 350, 55, 93, 104);
+
+	     }
+	     imageObj.src = "images/sticker_flower.png";
             
             },false)
 	</script>
@@ -253,6 +261,10 @@
 				<div id="color_picker">
 					<div id="colorHex"></div>	
                                 </div>
+				
+				<div id="stickers">
+					<p><span id="sticker_flower">FLOWER</span>       <span id="sticker_zigzag">ZIGZAG</span></p>
+				</div>
                                 
                                 <div id="savebtn" class="button">save</div>
                                 <div id="showbtn" class="button">Preview</div>

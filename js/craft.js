@@ -264,9 +264,9 @@ function showPreview(){
 	
 	var obj = scene.getObjectByName('monster').children[0].children[0].material.map.image;
 	
-	obj.src = 'model/test_change.png';
+	obj.src = dataURL;
 	
-	console.log(obj);
+	//console.log(obj);
 
 	//obj.mesh.material.uniforms.texture.value = THREE.ImageUtils.loadTexture("test_.png");
 	//obj.mesh.material.uniforms.texture.needsUpdate = true;

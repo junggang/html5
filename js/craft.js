@@ -39,10 +39,10 @@ function mask()
                 context.drawImage(imageObj, 0,0,500,500);
         }
 
-        imageObj.src = "images/mask_test.png";
-        context.globalCompositeOperation='source-in';
+        imageObj.src = "images/test_blank.png";
+        //context.globalCompositeOperation='source-in';
         
-        console.log("MASK");
+        //console.log("MASK");
         
 }
 
@@ -328,6 +328,7 @@ window.addEventListener('load',function(){
         var context = Ele.getContext('2d');
         
         init();
+	mask();
 	init3D();
 	prepareModel();
 	drawModel();

@@ -259,8 +259,17 @@ function showPreview(){
         var backArea = $('savePop').childNodes[1];
         
         //document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
-	prepareModel();
-	drawModel();
+	//prepareModel();
+	//drawModel();
+	
+	var obj = scene.getObjectByName('monster').children[0].children[0].material.map.image;
+	
+	obj.src = 'model/test_change.png';
+	
+	console.log(obj);
+
+	//obj.mesh.material.uniforms.texture.value = THREE.ImageUtils.loadTexture("test_.png");
+	//obj.mesh.material.uniforms.texture.needsUpdate = true;
 }
 
 
@@ -289,7 +298,6 @@ function init3D()
 function prepareModel()
 {
 	loader = new THREE.ColladaLoader();
-	console.log(loader);
 	loader.options.convertUpAxis = true;
 			      
 	loader.load( 'model/test.dae', function ( collada ) {
@@ -297,7 +305,7 @@ function prepareModel()
 				  //var skin = collada.skins[ 0 ];
 	dae.position.set(0,-5,0);//x,z,y- if you think in blender dimensions
 	dae.rotation.set(0,0,0);
-	
+	dae.name = 'monster';
 	scene.add(dae);
 	
 	});
@@ -321,6 +329,8 @@ window.addEventListener('load',function(){
         
         init();
 	init3D();
+	prepareModel();
+	drawModel();
         
         showColorPalette();
         showColorHexes();

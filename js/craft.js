@@ -340,6 +340,7 @@ function prepareModel()
 			      
 	loader.load( 'model/test.dae', function ( collada ) {
 	var dae = collada.scene;
+	
 	monsterMesh = dae;
 	dae.position.set(0,-5,0);
 	dae.rotation.set(0,0,0);

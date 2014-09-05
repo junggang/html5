@@ -1,3 +1,4 @@
+//----Canvas variables----//
 clicked = false;
 startX = 0;
 startY = 0;
@@ -5,9 +6,16 @@ canvasWidth = 500;
 canvasHeight = 500;
 var img;
 
+//----3D model variables----//
+preview_clicked = false;
+preview_startX = 0;
+preview_startY = 0;
+previewWidth = 500;
+previewHeight = 500;
+
 var renderer, scene, camera, mesh;
+var meshRot = 0;
 var loader;
-         
 
 var mine =
 {
@@ -30,6 +38,7 @@ function clickStatus(e)
 //----MASK------//
 function mask()
 {
+	//조심해>마스크 어떻게 하지. 그냥 다 그리고 씌우기 하면...
         var Ele = document.getElementById('myCanvas');
         var context = Ele.getContext('2d');
         //마스크 셋팅//
@@ -140,7 +149,7 @@ function endCoordinate(e)
 
 function changeColor(e) 
 {
-        //code
+	//고쳐>흐트믈 color로 바꿀까
         var ele = e.target;
         if (mine.isPen == true) 
         {
@@ -246,7 +255,7 @@ function showColorHexes()
 
 function clearCanvas() 
 {
-        //code
+	//고쳐>클리어할 때 기본 도안은 지우면 안됨.
         var can = document.getElementById('myCanvas');
         var context = can.getContext('2d');
         
@@ -256,12 +265,13 @@ function clearCanvas()
 function showPreview(){  
         var can = document.getElementById('myCanvas');
         var dataURL = can.toDataURL();
-        var backArea = $('savePop').childNodes[1];
+        //var backArea = $('savePop').childNodes[1];
         
         //document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
 	//prepareModel();
 	//drawModel();
 	
+	//조심해>이거 js안쓰고 이렇게 하는게 안전할까 ㅜㅜ
 	var obj = scene.getObjectByName('monster').children[0].children[0].material.map.image;
 	
 	obj.src = dataURL;
@@ -302,8 +312,8 @@ function prepareModel()
 			      
 	loader.load( 'model/test.dae', function ( collada ) {
 	var dae = collada.scene;
-				  //var skin = collada.skins[ 0 ];
-	dae.position.set(0,-5,0);//x,z,y- if you think in blender dimensions
+	mesh = dae;
+	dae.position.set(0,-5,0);
 	dae.rotation.set(0,0,0);
 	dae.name = 'monster';
 	scene.add(dae);
@@ -314,12 +324,22 @@ function prepareModel()
 function drawModel()
 {
 	requestAnimationFrame(drawModel);
-			
-	// mesh.rotation.x += .01;
-	// mesh.rotation.y += .02;
+	var obj = scene.getObjectByName('monster');
+	if (obj != undefined) {
+		meshRot += 0.005;
+		obj.rotation.set(0,meshRot,0);
+		showPreview();
+	}
 	renderer.render(scene, camera);
 }
-
+function rotateModel(e)
+{
+	if (model_clicked == true) 
+        {
+                fx = e.offsetX;
+                fy = e.offsetY;
+	}
+}
 
 window.addEventListener('load',function(){
         var Ele = document.getElementById('myCanvas');
@@ -346,10 +366,5 @@ window.addEventListener('load',function(){
         $('showbtn').addEventListener('click',showPreview,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
         console.log(mine.stroketype);
-                
-        loadStickers(stickerSources, function(images) {
-                //context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
-                //context.drawImage(images.sticker_flower, 350, 55, 93, 104);
-        });
 },false);
 

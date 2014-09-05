@@ -1,10 +1,22 @@
+//----Canvas variables----//
 clicked = false;
 startX = 0;
 startY = 0;
 canvasWidth = 500;
 canvasHeight = 500;
-var img;		
-         
+var img;
+
+//----3D model variables----//
+preview_clicked = false;
+preview_startX = 0;
+preview_startY = 0;
+previewWidth = 500;
+previewHeight = 500;
+preview_sensitivity = 0.1;
+
+var renderer, scene, camera, monsterMesh;
+var meshRot = 0;
+var loader;
 
 var mine =
 {
@@ -19,7 +31,6 @@ var mine =
 function clickStatus(e) 
 {
         clicked = true;
-        console.log(clicked);
         startX = e.offsetX;
         startY = e.offsetY;
 }
@@ -27,6 +38,7 @@ function clickStatus(e)
 //----MASK------//
 function mask()
 {
+	//조심해>마스크 어떻게 하지. 그냥 다 그리고 씌우기 하면...
         var Ele = document.getElementById('myCanvas');
         var context = Ele.getContext('2d');
         //마스크 셋팅//
@@ -36,10 +48,10 @@ function mask()
                 context.drawImage(imageObj, 0,0,500,500);
         }
 
-        imageObj.src = "images/mask_test.png";
-        context.globalCompositeOperation='source-in';
+        imageObj.src = "images/test_blank.png";
+        //context.globalCompositeOperation='source-in';
         
-        console.log("MASK");
+        //console.log("MASK");
         
 }
 
@@ -108,7 +120,7 @@ function drawLine(e)
         pat=context.createPattern($('colorPick'),"repeat");
         
         context.strokeStyle = mine.strokestyle;
-        console.log(mine.strokestyle);
+        //console.log(mine.strokestyle);
         
         context.beginPath();
         
@@ -131,13 +143,13 @@ function drawLine(e)
 function endCoordinate(e) 
 {
         clicked = false;
-        console.log(clicked);
+        //console.log(clicked);
 }
 
 
 function changeColor(e) 
 {
-        //code
+	//고쳐>흐트믈 color로 바꿀까
         var ele = e.target;
         if (mine.isPen == true) 
         {
@@ -147,7 +159,7 @@ function changeColor(e)
         else
         {
                 $('colorPick').src=ele.style.backgroundImage.slice(4, -1);
-                console.log($('colorPick').src);
+                //console.log($('colorPick').src);
                 mine.strokestyle = pat;
                 //img=document.getElementById("colorPick");
         }
@@ -161,7 +173,6 @@ function saveCanvas()
         var backArea = $('savePop').childNodes[1];
         var saveBTN = $('imgPop').querySelector('a');
         
-        console.log(saveBTN);
         
         $('canvasImg').src = dataURL;
         showPop("savePop");
@@ -243,7 +254,7 @@ function showColorHexes()
 
 function clearCanvas() 
 {
-        //code
+	//고쳐>클리어할 때 기본 도안은 지우면 안됨.
         var can = document.getElementById('myCanvas');
         var context = can.getContext('2d');
         
@@ -252,24 +263,126 @@ function clearCanvas()
                 
 function showPreview(){  
         var can = document.getElementById('myCanvas');
-        //var context = can.getContext('2d');
         var dataURL = can.toDataURL();
-        var backArea = $('savePop').childNodes[1];
+	var texture;
+        //var backArea = $('savePop').childNodes[1];
         
-        document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
-        //document.body.style.backgroundImage="url('"+dataURL+"')";;
+        //document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
+	//prepareModel();
+	//drawModel();
+	
+	//조심해>이거 js안쓰고 이렇게 하는게 안전할까 ㅜㅜ
+	
+	
+	if (monsterMesh == undefined) {
+		return;
+	}
+	
+	if (preview_clicked == false) {
+		meshRot += 0.005;
+		monsterMesh.rotation.set(0,meshRot,0);
+	}
+	
+	texture = monsterMesh.children[0].children[0].material.map.image;
+	if (texture != undefined) {
+		texture.src = dataURL;
+	}
+		
+	//console.log(obj);
+
+	//obj.mesh.material.uniforms.texture.value = THREE.ImageUtils.loadTexture("test_.png");
+	//obj.mesh.material.uniforms.texture.needsUpdate = true;
 }
 
 
+//-----3D------//
+function init3D()
+{
+        renderer = new THREE.WebGLRenderer();
+	renderer.setSize(canvasWidth, canvasHeight);
+	document.getElementById('preview').appendChild(renderer.domElement);
+			
+	scene = new THREE.Scene();
+	
+	camera = new THREE.PerspectiveCamera(45, (canvasWidth / canvasHeight), 1, 1000);
+	camera.position.set(0,5,30);
+	camera.lookAt( scene.position );	
+	renderer.setClearColorHex(0xffffff, 1);
+	
+	scene.add( new THREE.AmbientLight( 0x404040 ) );
+
+	var directionalLight = new THREE.PointLight(0xffffff,0.8 );
+
+	directionalLight.position.set(-100,200,100);
+	scene.add( directionalLight );
+}
+
+function prepareModel()
+{
+	loader = new THREE.ColladaLoader();
+	loader.options.convertUpAxis = true;
+			      
+	loader.load( 'model/test.dae', function ( collada ) {
+	var dae = collada.scene;
+	monsterMesh = dae;
+	dae.position.set(0,-5,0);
+	dae.rotation.set(0,0,0);
+	dae.name = 'monster';
+	scene.add(dae);
+	
+	});
+}
+
+function drawModel()
+{
+	requestAnimationFrame(drawModel);
+	
+	showPreview();
+	
+	renderer.render(scene, camera);
+}
+function rotateModel(e)
+{
+	if (preview_clicked ==false) {
+		return;
+	}
+	var fx,fy;
+	fx = e.offsetX;
+	fy = e.offsetY;
+	meshRot += (fx - preview_startX) * preview_sensitivity;
+	preview_startX = fx;
+	preview_startY = fy;
+	monsterMesh.rotation.set(0,meshRot,0);
+	
+	
+}
+
+function previewClickStatus(e)
+{
+	preview_clicked = true;
+	preview_startX = e.offsetX;
+	preview_startY = e.offsetY;	
+}
+
+function previewReset()
+{
+	preview_clicked = false;
+}
 
 window.addEventListener('load',function(){
         var Ele = document.getElementById('myCanvas');
         var bar = document.getElementById('pen_range');
         var hex = document.getElementsByClassName('colorHex');
         var context = Ele.getContext('2d');
+	var preview = document.getElementById('preview');
         
         init();
+	mask();
+	init3D();
+	prepareModel();
+	drawModel();
         
+	//----CANVAS-----//
         showColorPalette();
         showColorHexes();
         Ele.addEventListener('mousedown',clickStatus,false);
@@ -280,13 +393,15 @@ window.addEventListener('load',function(){
         $('stickers').addEventListener('mousedown',putSticker,true);      
    
         $('savebtn').addEventListener('click',saveCanvas,false);
-        $('showbtn').addEventListener('click',showPreview,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
-        console.log(mine.stroketype);
-                
-        loadStickers(stickerSources, function(images) {
-                //context.drawImage(images.sticker_zigzag, 100, 30, 200, 137);
-                //context.drawImage(images.sticker_flower, 350, 55, 93, 104);
-        });
+        //console.log(mine.stroketype);
+	
+	//----3D MODEL-----//
+	preview.addEventListener('mousedown',previewClickStatus,false);
+	preview.addEventListener('mousemove',rotateModel,false);
+	preview.addEventListener('mouseup',previewReset,false);
+	
+	
+	
 },false);
 

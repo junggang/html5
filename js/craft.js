@@ -55,6 +55,22 @@ function mask()
         
 }
 
+function coverMask()
+{
+	requestAnimationFrame(coverMask);
+	var Ele = document.getElementById('myCanvas');
+        var context = Ele.getContext('2d');
+        //마스크 셋팅//
+        var imageObj = new Image();
+        imageObj.onload = function()
+        {
+                context.drawImage(imageObj, 0,0,500,500);
+        }
+
+        imageObj.src = "images/test_blank.png";
+	
+}
+
 //----STICKER-----//
 var stickerSources = 
 {
@@ -377,7 +393,7 @@ window.addEventListener('load',function(){
 	var preview = document.getElementById('preview');
         
         init();
-	mask();
+	//mask();
 	init3D();
 	prepareModel();
 	drawModel();
@@ -394,6 +410,7 @@ window.addEventListener('load',function(){
    
         $('savebtn').addEventListener('click',saveCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
+	coverMask();
         //console.log(mine.stroketype);
 	
 	//----3D MODEL-----//

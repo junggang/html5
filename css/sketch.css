@@ -26,6 +26,7 @@ width:460px;
 div.colorhex{width: 30px;height: 30px;margin: 5px;float: left;border: 4px solid white;}
 div#colorSample{width:30px;height: 30px;border:5px solid white;background: red;margin:10px;}
 .button {color : black; cursor: pointer;width: 180px;height: 38px;background: white;font-size: 30px;text-align: center;margin: 10px;border: 1px solid black;}
+#undobtn, #redobtn {color:Red;}
 
 
 

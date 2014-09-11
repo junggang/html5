@@ -6,6 +6,12 @@ canvasWidth = 500;
 canvasHeight = 500;
 var img;
 
+var savedStep = [];
+var removedStep = [];
+var emptyStep = [];
+maxStep = 10;
+lastStep = false;
+
 //----3D model variables----//
 preview_clicked = false;
 preview_startX = 0;
@@ -158,6 +164,10 @@ function drawLine(e)
 
 function endCoordinate(e) 
 {
+	if (clicked) {
+		storeStep();
+		lastStep = true;
+	}
         clicked = false;
         //console.log(clicked);
 }
@@ -276,6 +286,59 @@ function clearCanvas()
         
         context.clearRect(0,0,can.width,can.height);
 }
+
+//----UNDO , REDO----//
+function storeStep()
+{
+	var can = document.getElementById('myCanvas');
+        var dataURL = can.toDataURL();
+	
+	if (savedStep.length>=maxStep) {
+		savedStep.shift();
+	}
+	savedStep.push(dataURL);
+	console.log(savedStep);
+}
+
+function undoStep()
+{
+	if (savedStep.length == 0) {
+		console.log("nothing in array");
+		return;
+	}
+	
+	var poppedURL = savedStep.pop();
+	
+	if (removedStep.length>=maxStep) {
+		removedStep.shift();
+	}
+	removedStep.push(poppedURL);
+	
+	//만약 마지막 단계라면 한번 더 해준다.
+	if (lastStep) {
+		poppedURL = savedStep.pop();
+	}
+	
+	var can = document.getElementById('myCanvas');
+        var context = can.getContext('2d');
+        var imageObj = new Image();
+        imageObj.onload = function()
+        {
+                context.drawImage(imageObj, 0,0,500,500);
+        }
+	imageObj.src = poppedURL;
+	
+	console.log(savedStep);
+	
+	lastStep = false;
+}
+
+function redoStep()
+{
+	
+}
+
+
                 
 function showPreview(){  
         var can = document.getElementById('myCanvas');
@@ -325,9 +388,9 @@ function init3D()
 	camera.lookAt( scene.position );	
 	renderer.setClearColorHex(0xffffff, 1);
 	
-	scene.add( new THREE.AmbientLight( 0x404040 ) );
+	scene.add( new THREE.AmbientLight( 0x404040,1.0 ) );
 
-	var directionalLight = new THREE.PointLight(0xffffff,0.8 );
+	var directionalLight = new THREE.PointLight(0xffffff,0.4 );
 
 	directionalLight.position.set(-100,200,100);
 	scene.add( directionalLight );
@@ -411,7 +474,10 @@ window.addEventListener('load',function(){
    
         $('savebtn').addEventListener('click',saveCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
+	$('undobtn').addEventListener('click',undoStep,false);
+	$('redobtn').addEventListener('click',redoStep,false);
 	coverMask();
+	storeStep();
         //console.log(mine.stroketype);
 	
 	//----3D MODEL-----//

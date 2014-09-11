@@ -302,40 +302,50 @@ function storeStep()
 
 function undoStep()
 {
-	if (savedStep.length == 0) {
-		console.log("nothing in array");
+	if (savedStep.length <= 1) {
+		console.log("nothing to UNDO");
 		return;
 	}
 	
+	//우선 현재 상태를 저장하고 이를 removedStep에 넣는다.
 	var poppedURL = savedStep.pop();
-	
 	if (removedStep.length>=maxStep) {
 		removedStep.shift();
 	}
 	removedStep.push(poppedURL);
 	
-	//만약 마지막 단계라면 한번 더 해준다.
-	if (lastStep) {
-		poppedURL = savedStep.pop();
-	}
-	
 	var can = document.getElementById('myCanvas');
         var context = can.getContext('2d');
+	var idx = savedStep.length - 1;
         var imageObj = new Image();
         imageObj.onload = function()
         {
                 context.drawImage(imageObj, 0,0,500,500);
         }
-	imageObj.src = poppedURL;
+	imageObj.src = savedStep[idx];
 	
 	console.log(savedStep);
-	
-	lastStep = false;
 }
+
 
 function redoStep()
 {
+	if (removedStep.length <= 0) {
+		console.log("nothing to REDO");
+		return;
+	}
 	
+	savedStep.push(removedStep.pop());
+	
+	var can = document.getElementById('myCanvas');
+        var context = can.getContext('2d');
+	var idx = savedStep.length - 1;
+        var imageObj = new Image();
+        imageObj.onload = function()
+        {
+                context.drawImage(imageObj, 0,0,500,500);
+        }
+	imageObj.src = savedStep[idx];
 }
 
 

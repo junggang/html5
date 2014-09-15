@@ -16,7 +16,7 @@ lastStep = false;
 preview_clicked = false;
 preview_startX = 0;
 preview_startY = 0;
-previewWidth = 500;
+previewWidth = 300;
 previewHeight = 500;
 preview_sensitivity = 0.1;
 
@@ -238,7 +238,7 @@ function exportCanvas()
 	//make print-out
 	var printURL = Ele.toDataURL();
 	
-	//window.win = open(printURL);
+	//window.win = open(printURL, "_self");
         //setTimeout('win.document.execCommand("Print")', 500);
 	
 	showPop("exportPop");
@@ -414,24 +414,27 @@ function showPreview(){
 function init3D()
 {
         renderer = new THREE.WebGLRenderer();
-	renderer.setSize(canvasWidth, canvasHeight);
+	renderer.setSize(previewWidth, previewHeight);
 	document.getElementById('preview').appendChild(renderer.domElement);
 			
 	scene = new THREE.Scene();
 	
-	camera = new THREE.PerspectiveCamera(45, (canvasWidth / canvasHeight), 1, 1000);
+	camera = new THREE.PerspectiveCamera(45, (previewWidth / previewHeight), 1, 1000);
 	camera.position.set(0,5,30);
 	camera.lookAt( scene.position );	
 	renderer.setClearColor(0xffffff, 1);
 	
-	scene.add( new THREE.AmbientLight( 0x404040,1.0 ) );
+	scene.add( new THREE.AmbientLight( 0xeeeeee,1.0 ) );
 
-	var directionalLight_main = new THREE.PointLight(0xffffff, 0.8, 0 );
+	var directionalLight_main = new THREE.PointLight(0xffffff, 0.5, 0 );
 	var directionalLight_0 = new THREE.PointLight(0xffffff, 0.5, 0 );
 
-	directionalLight_main.position.set(0,100,50); // 위치 : (x, y, z(시야에서의 깊이를 의미 /증가할수록 나랑 가까움))
-	//directionalLight_0.position.set();
+	directionalLight_main.position.set(100,80,50); // 위치 : (x, y, z(시야에서의 깊이를 의미 /증가할수록 나랑 가까움))
+	directionalLight_0.position.set(-100,80,50);
 	scene.add( directionalLight_main );
+	scene.add( directionalLight_0 );
+	
+
 }
 
 function prepareModel()
@@ -439,7 +442,7 @@ function prepareModel()
 	loader = new THREE.ColladaLoader();
 	loader.options.convertUpAxis = true;
 			      
-	loader.load( 'model/test.dae', function ( collada ) {
+	loader.load( 'model/test1.dae', function ( collada ) {
 	var dae = collada.scene;
 	
 	monsterMesh = dae;

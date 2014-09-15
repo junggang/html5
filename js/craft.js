@@ -120,7 +120,8 @@ function putSticker(e)
         }
 
         imageObj.src = "images/"+stickerName+".png";
-        
+	
+	//조심해>드래그한 후 놓을 때 storeStep해줘야 함.
 }
 
 
@@ -153,10 +154,6 @@ function drawLine(e)
         startY = fy;
         context.closePath();
         context.stroke();
-        //save current Step
-        //mine.stepArray[mine.step] = can.toDataURL();
-        //console.log(mine.stepArray[mine.step]);
-        //mine.step = mine.step + 1;
         }
 }
 //removeEventHandeler 를 쓸 수 있다. mousedown/up만 쓸 수 있겠지~
@@ -169,7 +166,6 @@ function endCoordinate(e)
 		lastStep = true;
 	}
         clicked = false;
-        //console.log(clicked);
 }
 
 
@@ -210,6 +206,44 @@ function saveCanvas()
         saveBTN.download="image";
         //context.save();
         console.log("saved");
+}
+
+function exportCanvas()
+{
+	var can = document.getElementById('myCanvas');
+        var dataURL = can.toDataURL();
+	
+	var Ele = document.getElementById('exportCanvas');
+        var context = Ele.getContext('2d');
+        context.fillStyle = "white";
+        context.fillRect(0,0,595,842);
+        
+	var imageObj = new Image();
+        imageObj.onload = function()
+        {
+                context.drawImage(imageObj, 48,128);
+        }
+
+        imageObj.src = dataURL;
+	
+	//logo image
+	var logo = new Image();
+        logo.onload = function()
+        {
+                context.drawImage(logo, 0,0);
+        }
+
+        logo.src = "images/export_logo.png";
+	
+	//make print-out
+	var printURL = Ele.toDataURL();
+	
+	//window.win = open(printURL);
+        //setTimeout('win.document.execCommand("Print")', 500);
+	
+	showPop("exportPop");
+	$('printbtn').addEventListener('click',function(){window.win=open(printURL)},false);
+	//backArea.addEventListener('click',function(){ $('savePop').style.display="none";},false);
 }
 
 function restoreCanvas() 
@@ -280,7 +314,7 @@ function showColorHexes()
 
 function clearCanvas() 
 {
-	//고쳐>클리어할 때 기본 도안은 지우면 안됨.
+	storeStep();
         var can = document.getElementById('myCanvas');
         var context = can.getContext('2d');
         
@@ -354,14 +388,6 @@ function showPreview(){
         var can = document.getElementById('myCanvas');
         var dataURL = can.toDataURL();
 	var texture;
-        //var backArea = $('savePop').childNodes[1];
-        
-        //document.getElementById('preview').style.backgroundImage="url('"+dataURL+"')";
-	//prepareModel();
-	//drawModel();
-	
-	//조심해>이거 js안쓰고 이렇게 하는게 안전할까 ㅜㅜ
-	
 	
 	if (monsterMesh == undefined) {
 		return;
@@ -396,14 +422,16 @@ function init3D()
 	camera = new THREE.PerspectiveCamera(45, (canvasWidth / canvasHeight), 1, 1000);
 	camera.position.set(0,5,30);
 	camera.lookAt( scene.position );	
-	renderer.setClearColorHex(0xffffff, 1);
+	renderer.setClearColor(0xffffff, 1);
 	
 	scene.add( new THREE.AmbientLight( 0x404040,1.0 ) );
 
-	var directionalLight = new THREE.PointLight(0xffffff,0.4 );
+	var directionalLight_main = new THREE.PointLight(0xffffff, 0.8, 0 );
+	var directionalLight_0 = new THREE.PointLight(0xffffff, 0.5, 0 );
 
-	directionalLight.position.set(-100,200,100);
-	scene.add( directionalLight );
+	directionalLight_main.position.set(0,100,50); // 위치 : (x, y, z(시야에서의 깊이를 의미 /증가할수록 나랑 가까움))
+	//directionalLight_0.position.set();
+	scene.add( directionalLight_main );
 }
 
 function prepareModel()
@@ -415,7 +443,7 @@ function prepareModel()
 	var dae = collada.scene;
 	
 	monsterMesh = dae;
-	dae.position.set(0,-5,0);
+	dae.position.set(0,0,0);
 	dae.rotation.set(0,0,0);
 	dae.name = 'monster';
 	scene.add(dae);
@@ -483,6 +511,7 @@ window.addEventListener('load',function(){
         $('stickers').addEventListener('mousedown',putSticker,true);      
    
         $('savebtn').addEventListener('click',saveCanvas,false);
+	$('exportbtn').addEventListener('click',exportCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
 	$('undobtn').addEventListener('click',undoStep,false);
 	$('redobtn').addEventListener('click',redoStep,false);

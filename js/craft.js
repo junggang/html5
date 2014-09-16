@@ -588,6 +588,7 @@ window.addEventListener('load',function(){
 	var preview = document.getElementById('preview');
 	var editCanvas = document.getElementById('editCanvas');
         
+	document.onselectstart = new Function('return false');
         init();
 	//mask();
 	init3D();

@@ -117,11 +117,13 @@ function putSticker(e)
 {
 	//스티커를 붙일 때 기존 캔버스는 편집 불가하게 바꿈
 	var can = document.getElementById('myCanvas');
+	var backContext = can.getContext('2d');
         savedBackground = can.toDataURL();
 	console.log(savedBackground);
 	
 	isSticker = true;
-	document.getElementById('myCanvas').style.pointerEvents = 'none';
+	can.style.pointerEvents = 'none';
+	document.getElementById('stickerUI').style.display = '';
 	
 	
 	document.getElementById('editCanvas').style.pointerEvents = '';
@@ -136,11 +138,11 @@ function putSticker(e)
         {
 //                context.drawImage(imageObj, Math.floor((Math.random() * canvasWidth) + 1),Math.floor((Math.random() * canvasHeight) + 1));
 		context.drawImage(imageObj, 100,100);
+		backContext.drawImage(imageObj,100,100);
 
         }
 
         imageObj.src = "images/"+stickerName+".png";
-	
 	//조심해>드래그한 후 놓을 때 storeStep해줘야 함.
 }
 
@@ -182,6 +184,17 @@ function moveSticker(e)
 function endSticker(e)
 {
 	clicked = false;
+}
+
+function confirmSticker()
+{
+	isSticker = false;
+	document.getElementById('myCanvas').style.pointerEvents = '';
+	document.getElementById('stickerUI').style.display = 'none';
+	
+	
+	document.getElementById('editCanvas').style.pointerEvents = 'none';
+	resetEditCanvas();
 }
 
 
@@ -602,6 +615,7 @@ window.addEventListener('load',function(){
 	editCanvas.addEventListener('mousedown',startSticker,false);
 	editCanvas.addEventListener('mousemove',moveSticker,false);
 	editCanvas.addEventListener('mouseup',endSticker,false);
+	stickerUI.addEventListener('mousedown',confirmSticker,false);
 	
 	
 	//----3D MODEL-----//

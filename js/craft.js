@@ -12,6 +12,12 @@ var emptyStep = [];
 maxStep = 10;
 lastStep = false;
 
+//sticker
+var savedBackground;
+var currentSticker;
+isSticker = false;
+
+
 //----3D model variables----//
 preview_clicked = false;
 preview_startX = 0;
@@ -64,7 +70,7 @@ function mask()
 function coverMask()
 {
 	requestAnimationFrame(coverMask);
-	var Ele = document.getElementById('myCanvas');
+	var Ele = document.getElementById('maskCanvas');
         var context = Ele.getContext('2d');
         //마스크 셋팅//
         var imageObj = new Image();
@@ -109,14 +115,28 @@ function loadStickers(stickerSources, callback)
 
 function putSticker(e)
 {
-        var Ele = document.getElementById('myCanvas');
+	//스티커를 붙일 때 기존 캔버스는 편집 불가하게 바꿈
+	var can = document.getElementById('myCanvas');
+        savedBackground = can.toDataURL();
+	console.log(savedBackground);
+	
+	isSticker = true;
+	document.getElementById('myCanvas').style.pointerEvents = 'none';
+	
+	
+	document.getElementById('editCanvas').style.pointerEvents = '';
+	
+        var Ele = document.getElementById('editCanvas');
         var context = Ele.getContext('2d');
         var stickerName = e.target.id;
-        
         var imageObj = new Image();
+	currentSticker = imageObj;
+	
         imageObj.onload = function()
         {
-                context.drawImage(imageObj, Math.floor((Math.random() * canvasWidth) + 1),Math.floor((Math.random() * canvasHeight) + 1));
+//                context.drawImage(imageObj, Math.floor((Math.random() * canvasWidth) + 1),Math.floor((Math.random() * canvasHeight) + 1));
+		context.drawImage(imageObj, 100,100);
+
         }
 
         imageObj.src = "images/"+stickerName+".png";
@@ -124,10 +144,53 @@ function putSticker(e)
 	//조심해>드래그한 후 놓을 때 storeStep해줘야 함.
 }
 
+function startSticker(e)
+{
+	clicked = true;
+        startX = e.offsetX;
+        startY = e.offsetY;
+}
+
+function moveSticker(e)
+{
+	if (clicked == true) {
+		resetEditCanvas();
+		var Ele = document.getElementById('editCanvas');
+		var context = Ele.getContext('2d');
+		var backCan = document.getElementById('myCanvas');
+		var backContext = backCan.getContext('2d');
+		
+		fx = e.offsetX;
+		fy = e.offsetY;
+		console.log(fx,fy);
+		context.drawImage(currentSticker, (fx-50),(fy-50));
+		
+		startX = fx;
+		startY = fy;	//code
+		
+		var imageObj = new Image();
+		imageObj.onload = function()
+		{
+			backContext.drawImage(imageObj, 0,0);
+			backContext.drawImage(Ele,0,0);
+		}
+		imageObj.src = savedBackground;
+	}
+	
+}
+
+function endSticker(e)
+{
+	clicked = false;
+}
+
 
 
 function drawLine(e) 
 {
+	if (isSticker == true) {
+		return;
+	}
         if (clicked == true) 
         {
                 fx = e.offsetX;
@@ -271,6 +334,14 @@ function init()
         var first=c.getContext("2d");
         first.fillStyle = "white";
         first.fillRect(0,0,canvasWidth,canvasHeight);
+}
+
+//----Edit canvas--------//
+function resetEditCanvas()
+{
+	var editCanvas = document.getElementById('editCanvas');
+	var editContext = editCanvas.getContext('2d');
+	editContext.clearRect(0,0,canvasWidth,canvasHeight);
 }
 
 function postCanvasToURL() 
@@ -426,8 +497,8 @@ function init3D()
 	
 	scene.add( new THREE.AmbientLight( 0xeeeeee,1.0 ) );
 
-	var directionalLight_main = new THREE.PointLight(0xffffff, 0.5, 0 );
-	var directionalLight_0 = new THREE.PointLight(0xffffff, 0.5, 0 );
+	var directionalLight_main = new THREE.PointLight(0xffffff, 1, 0 );
+	var directionalLight_0 = new THREE.PointLight(0xffffff, 1, 0 );
 
 	directionalLight_main.position.set(100,80,50); // 위치 : (x, y, z(시야에서의 깊이를 의미 /증가할수록 나랑 가까움))
 	directionalLight_0.position.set(-100,80,50);
@@ -441,6 +512,12 @@ function prepareModel()
 {
 	loader = new THREE.ColladaLoader();
 	loader.options.convertUpAxis = true;
+	
+	loader.load('model/back1.dae',function(collada){
+		var backModel = collada.scene;
+		backModel.position.set(0,0,0);
+		scene.add(backModel);
+	});
 			      
 	loader.load( 'model/test1.dae', function ( collada ) {
 	var dae = collada.scene;
@@ -496,6 +573,7 @@ window.addEventListener('load',function(){
         var hex = document.getElementsByClassName('colorHex');
         var context = Ele.getContext('2d');
 	var preview = document.getElementById('preview');
+	var editCanvas = document.getElementById('editCanvas');
         
         init();
 	//mask();
@@ -520,7 +598,11 @@ window.addEventListener('load',function(){
 	$('redobtn').addEventListener('click',redoStep,false);
 	coverMask();
 	storeStep();
-        //console.log(mine.stroketype);
+	//---sticker----
+	editCanvas.addEventListener('mousedown',startSticker,false);
+	editCanvas.addEventListener('mousemove',moveSticker,false);
+	editCanvas.addEventListener('mouseup',endSticker,false);
+	
 	
 	//----3D MODEL-----//
 	preview.addEventListener('mousedown',previewClickStatus,false);

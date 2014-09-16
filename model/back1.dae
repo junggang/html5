@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.71.0 commit date:2014-06-25, commit time:18:36, hash:9337574</authoring_tool>
+    </contributor>
+    <created>2014-09-16T19:31:17</created>
+    <modified>2014-09-16T19:31:17</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="background_copy_PNG" name="background_copy_PNG">
+      <init_from>background%20copy.PNG</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="back-effect">
+      <profile_COMMON>
+        <newparam sid="background_copy_PNG-surface">
+          <surface type="2D">
+            <init_from>background_copy_PNG</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="background_copy_PNG-sampler">
+          <sampler2D>
+            <source>background_copy_PNG-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="background_copy_PNG-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="back-material" name="back">
+      <instance_effect url="#back-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_002-mesh" name="Plane.002">
+      <mesh>
+        <source id="Plane_002-mesh-positions">
+          <float_array id="Plane_002-mesh-positions-array" count="48">-1 1.279391 -0.1316643 1 1.279391 -0.1316643 -1 -0.7206091 1.415905 1 -0.7206091 1.415905 -1 -0.7206093 0.1251042 -1 -0.4638408 -0.1316643 -1 -0.7080421 0.04575836 -1 -0.6715708 -0.02582049 -1 -0.6147655 -0.08262586 -1 -0.5431866 -0.1190971 1 -0.4638409 -0.1316643 1 -0.7206093 0.1251042 1 -0.5431867 -0.1190971 1 -0.6147656 -0.08262586 1 -0.671571 -0.02582049 1 -0.7080422 0.04575836</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_002-mesh-normals">
+          <float_array id="Plane_002-mesh-normals-array" count="42">0 1 -1.38529e-7 0 0.9876885 0.1564332 0 0.8910067 0.4539903 0 0.7071068 0.7071068 0 0.4539908 0.8910064 0 0.1564342 0.9876885 0 0 1 0 1 -1.38529e-7 0 0.9876884 0.1564347 0 0.8910066 0.4539902 0 0.7071068 0.7071068 0 0.4539906 0.8910064 0 0.1564344 0.9876884 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-normals-array" count="14" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_002-mesh-map-0">
+          <float_array id="Plane_002-mesh-map-0-array" count="84">0.5821226 0.3757019 7.2864e-7 0.375703 0 1.2491e-6 7.2864e-7 0.375703 0.5821226 0.3757019 0.5821226 0.3990843 8.67429e-7 0.3990846 0.5821226 0.3990843 0.5821227 0.4224668 9.7152e-7 0.4224678 0.5821227 0.4224668 0.5821227 0.4458491 1.04091e-6 0.4458492 0.5821227 0.4458491 0.5821228 0.4692314 1.1797e-6 0.4692324 0.5821228 0.4692314 0.5821229 0.4926137 1.31849e-6 0.4926139 0.5821229 0.4926137 0.5821231 1 0.5821219 0 0.5821226 0.3757019 0 1.2491e-6 8.67429e-7 0.3990846 7.2864e-7 0.375703 0.5821226 0.3990843 9.7152e-7 0.4224678 8.67429e-7 0.3990846 0.5821227 0.4224668 1.04091e-6 0.4458492 9.7152e-7 0.4224678 0.5821227 0.4458491 1.1797e-6 0.4692324 1.04091e-6 0.4458492 0.5821228 0.4692314 1.31849e-6 0.4926139 1.1797e-6 0.4692324 0.5821229 0.4926137 1.38789e-6 1 1.31849e-6 0.4926139 0.5821231 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-map-0-array" count="42" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_002-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_002-mesh-positions"/>
+        </vertices>
+        <polylist material="back-material" count="14">
+          <input semantic="VERTEX" source="#Plane_002-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_002-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_002-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>11 0 0 4 0 1 2 0 2 4 1 3 11 1 4 15 1 5 6 2 6 15 2 7 14 2 8 7 3 9 14 3 10 13 3 11 8 4 12 13 4 13 12 4 14 9 5 15 12 5 16 10 5 17 5 6 18 10 6 19 1 6 20 3 7 21 11 7 22 2 7 23 6 8 24 4 8 25 15 8 26 7 9 27 6 9 28 14 9 29 8 10 30 7 10 31 13 10 32 9 11 33 8 11 34 12 11 35 5 12 36 9 12 37 10 12 38 0 13 39 5 13 40 1 13 41</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_animations>
+    <animation id="Plane_001_location_X">
+      <source id="Plane_001_location_X-input">
+        <float_array id="Plane_001_location_X-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_X-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_X-output">
+        <float_array id="Plane_001_location_X-output-array" count="1">0.1421568</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_X-output-array" count="1" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_X-interpolation">
+        <Name_array id="Plane_001_location_X-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_X-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_X-intangent">
+        <float_array id="Plane_001_location_X-intangent-array" count="2">1.916667 0.1421568</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_X-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_X-outtangent">
+        <float_array id="Plane_001_location_X-outtangent-array" count="2">2 0.1421568</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_X-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_location_X-sampler">
+        <input semantic="INPUT" source="#Plane_001_location_X-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_location_X-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_location_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_location_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_location_X-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_location_X-sampler" target="Plane_001/location.X"/>
+    </animation>
+    <animation id="Plane_001_location_Y">
+      <source id="Plane_001_location_Y-input">
+        <float_array id="Plane_001_location_Y-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Y-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Y-output">
+        <float_array id="Plane_001_location_Y-output-array" count="1">4.95058</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Y-output-array" count="1" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Y-interpolation">
+        <Name_array id="Plane_001_location_Y-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Y-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Y-intangent">
+        <float_array id="Plane_001_location_Y-intangent-array" count="2">1.916667 4.95058</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Y-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Y-outtangent">
+        <float_array id="Plane_001_location_Y-outtangent-array" count="2">2 4.95058</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Y-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_location_Y-sampler">
+        <input semantic="INPUT" source="#Plane_001_location_Y-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_location_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_location_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_location_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_location_Y-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_location_Y-sampler" target="Plane_001/location.Y"/>
+    </animation>
+    <animation id="Plane_001_location_Z">
+      <source id="Plane_001_location_Z-input">
+        <float_array id="Plane_001_location_Z-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Z-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Z-output">
+        <float_array id="Plane_001_location_Z-output-array" count="1">1.971372</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Z-output-array" count="1" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Z-interpolation">
+        <Name_array id="Plane_001_location_Z-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Z-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Z-intangent">
+        <float_array id="Plane_001_location_Z-intangent-array" count="2">1.916667 1.971372</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Z-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_location_Z-outtangent">
+        <float_array id="Plane_001_location_Z-outtangent-array" count="2">2 1.971372</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_location_Z-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_location_Z-sampler">
+        <input semantic="INPUT" source="#Plane_001_location_Z-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_location_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_location_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_location_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_location_Z-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_location_Z-sampler" target="Plane_001/location.Z"/>
+    </animation>
+    <animation id="Plane_001_rotation_euler_X">
+      <source id="Plane_001_rotation_euler_X-input">
+        <float_array id="Plane_001_rotation_euler_X-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_X-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_X-output">
+        <float_array id="Plane_001_rotation_euler_X-output-array" count="1">90.00001</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_X-output-array" count="1" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_X-interpolation">
+        <Name_array id="Plane_001_rotation_euler_X-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_X-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_X-intangent">
+        <float_array id="Plane_001_rotation_euler_X-intangent-array" count="2">1.916667 90.00001</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_X-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_X-outtangent">
+        <float_array id="Plane_001_rotation_euler_X-outtangent-array" count="2">2 90.00001</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_X-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_rotation_euler_X-sampler">
+        <input semantic="INPUT" source="#Plane_001_rotation_euler_X-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_rotation_euler_X-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_rotation_euler_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_rotation_euler_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_rotation_euler_X-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_rotation_euler_X-sampler" target="Plane_001/rotationX.ANGLE"/>
+    </animation>
+    <animation id="Plane_001_rotation_euler_Y">
+      <source id="Plane_001_rotation_euler_Y-input">
+        <float_array id="Plane_001_rotation_euler_Y-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Y-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Y-output">
+        <float_array id="Plane_001_rotation_euler_Y-output-array" count="1">0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Y-output-array" count="1" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Y-interpolation">
+        <Name_array id="Plane_001_rotation_euler_Y-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Y-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Y-intangent">
+        <float_array id="Plane_001_rotation_euler_Y-intangent-array" count="2">1.916667 0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Y-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Y-outtangent">
+        <float_array id="Plane_001_rotation_euler_Y-outtangent-array" count="2">2 0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Y-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_rotation_euler_Y-sampler">
+        <input semantic="INPUT" source="#Plane_001_rotation_euler_Y-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_rotation_euler_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_rotation_euler_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_rotation_euler_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_rotation_euler_Y-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_rotation_euler_Y-sampler" target="Plane_001/rotationY.ANGLE"/>
+    </animation>
+    <animation id="Plane_001_rotation_euler_Z">
+      <source id="Plane_001_rotation_euler_Z-input">
+        <float_array id="Plane_001_rotation_euler_Z-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Z-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Z-output">
+        <float_array id="Plane_001_rotation_euler_Z-output-array" count="1">0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Z-output-array" count="1" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Z-interpolation">
+        <Name_array id="Plane_001_rotation_euler_Z-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Z-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Z-intangent">
+        <float_array id="Plane_001_rotation_euler_Z-intangent-array" count="2">1.916667 0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Z-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_rotation_euler_Z-outtangent">
+        <float_array id="Plane_001_rotation_euler_Z-outtangent-array" count="2">2 0</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_rotation_euler_Z-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_rotation_euler_Z-sampler">
+        <input semantic="INPUT" source="#Plane_001_rotation_euler_Z-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_rotation_euler_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_rotation_euler_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_rotation_euler_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_rotation_euler_Z-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_rotation_euler_Z-sampler" target="Plane_001/rotationZ.ANGLE"/>
+    </animation>
+    <animation id="Plane_001_scale_X">
+      <source id="Plane_001_scale_X-input">
+        <float_array id="Plane_001_scale_X-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_X-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_X-output">
+        <float_array id="Plane_001_scale_X-output-array" count="1">12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_X-output-array" count="1" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_X-interpolation">
+        <Name_array id="Plane_001_scale_X-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_X-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_X-intangent">
+        <float_array id="Plane_001_scale_X-intangent-array" count="2">1.916667 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_X-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_X-outtangent">
+        <float_array id="Plane_001_scale_X-outtangent-array" count="2">2 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_X-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_scale_X-sampler">
+        <input semantic="INPUT" source="#Plane_001_scale_X-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_scale_X-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_scale_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_scale_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_scale_X-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_scale_X-sampler" target="Plane_001/scale.X"/>
+    </animation>
+    <animation id="Plane_001_scale_Y">
+      <source id="Plane_001_scale_Y-input">
+        <float_array id="Plane_001_scale_Y-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Y-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Y-output">
+        <float_array id="Plane_001_scale_Y-output-array" count="1">12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Y-output-array" count="1" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Y-interpolation">
+        <Name_array id="Plane_001_scale_Y-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Y-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Y-intangent">
+        <float_array id="Plane_001_scale_Y-intangent-array" count="2">1.916667 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Y-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Y-outtangent">
+        <float_array id="Plane_001_scale_Y-outtangent-array" count="2">2 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Y-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_scale_Y-sampler">
+        <input semantic="INPUT" source="#Plane_001_scale_Y-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_scale_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_scale_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_scale_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_scale_Y-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_scale_Y-sampler" target="Plane_001/scale.Y"/>
+    </animation>
+    <animation id="Plane_001_scale_Z">
+      <source id="Plane_001_scale_Z-input">
+        <float_array id="Plane_001_scale_Z-input-array" count="1">1.958333</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Z-input-array" count="1" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Z-output">
+        <float_array id="Plane_001_scale_Z-output-array" count="1">12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Z-output-array" count="1" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Z-interpolation">
+        <Name_array id="Plane_001_scale_Z-interpolation-array" count="1">BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Z-interpolation-array" count="1" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Z-intangent">
+        <float_array id="Plane_001_scale_Z-intangent-array" count="2">1.916667 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Z-intangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Plane_001_scale_Z-outtangent">
+        <float_array id="Plane_001_scale_Z-outtangent-array" count="2">2 12.79315</float_array>
+        <technique_common>
+          <accessor source="#Plane_001_scale_Z-outtangent-array" count="1" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Plane_001_scale_Z-sampler">
+        <input semantic="INPUT" source="#Plane_001_scale_Z-input"/>
+        <input semantic="OUTPUT" source="#Plane_001_scale_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Plane_001_scale_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#Plane_001_scale_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#Plane_001_scale_Z-outtangent"/>
+      </sampler>
+      <channel source="#Plane_001_scale_Z-sampler" target="Plane_001/scale.Z"/>
+    </animation>
+  </library_animations>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Plane_001" name="Plane_001" type="NODE">
+        <translate sid="location">0.1421568 4.95058 1.971372</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 90.00001</rotate>
+        <scale sid="scale">12.79315 12.79315 12.79315</scale>
+        <instance_geometry url="#Plane_002-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="back-material" target="#back-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

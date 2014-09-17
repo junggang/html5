@@ -19,6 +19,7 @@ isSticker = false;
 
 
 //----3D model variables----//
+isPaused = false;
 preview_clicked = false;
 preview_startX = 0;
 preview_startY = 0;
@@ -500,7 +501,7 @@ function showPreview(){
         var dataURL = can.toDataURL();
 	var texture;
 	
-	if (monsterMesh == undefined) {
+	if (monsterMesh == undefined|| isPaused == true) {
 		return;
 	}
 	
@@ -595,6 +596,23 @@ function rotateModel(e)
 	
 }
 
+function pauseRotation(e)
+{
+	previewClickStatus(e);
+	//이미 멈춰져 있으면 play한후 리턴
+	if (isPaused) {
+		isPaused = false;
+		e.target.innerHTML = 'pause';
+		return;
+	}
+	
+	
+	isPaused = true;
+	e.target.innerHTML = 'play';
+	console.log(preview_clicked);
+	monsterMesh.rotation.set(0,meshRot,0);
+}
+
 function previewClickStatus(e)
 {
 	preview_clicked = true;
@@ -616,6 +634,7 @@ window.addEventListener('load',function(){
 	var editCanvas = document.getElementById('editCanvas');
 	var confirmbtn = document.getElementById('confirmSticker');
 	var resetSbtn = document.getElementById('resetSticker');
+	
         
 	document.onselectstart = new Function('return false');
         init();
@@ -653,6 +672,8 @@ window.addEventListener('load',function(){
 	preview.addEventListener('mousedown',previewClickStatus,false);
 	preview.addEventListener('mousemove',rotateModel,false);
 	preview.addEventListener('mouseup',previewReset,false);
+	//previewUI
+	$('pausePbtn').addEventListener('mousedown',pauseRotation,false);
 	
 	
 	

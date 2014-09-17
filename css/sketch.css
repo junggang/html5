@@ -18,16 +18,25 @@ background: white;
 border:1px solid #6A4A3C;
 float: left;
 }
-div#preview
-{
-    width:300px;
-    height: 500px;
-    background: white;
-    float:right;
-    margin-right: 30px;
-    border: solid 1px black;
-    cursor:url('../images/cursor_rotate.gif'),url('../images/cursor_rotate.cur'),auto;
-}
+
+/**Canvas**/
+#myCanvas {position: absolute; z-index: 0}
+#editCanvas,#maskCanvas {position: absolute;}
+#editCanvas {z-index: 1;}
+#maskCanvas {z-index: 2;}
+
+/**Sticker**/
+#stickerUI {position: absolute; margin-top: 400px;width:500px;height: 100px;z-index: 3;}
+.eachStickerUI {float:left;width:80px;height: 80px;background: red;color: white;}
+
+/**Preview**/
+#preview { width:300px; height: 500px; background: white; float:right; margin-right: 30px; border: solid 1px black; cursor:url('../images/cursor_rotate.gif'),url('../images/cursor_rotate.cur'),auto; }
+#previewUI {position: absolute;width:300px;height: 500px;z-index: 3;}
+#pausePbtn {height: 20px;color:red;}
+#viewUI {height: 20px;margin-top: 450px;}
+.viewBtn {margin: 15px;}
+    
+    
 #tools { float : left; margin-top : 130px;}
 #tool_area
 {

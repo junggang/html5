@@ -69,7 +69,7 @@ function mask()
 
 function coverMask()
 {
-	requestAnimationFrame(coverMask);
+	//requestAnimationFrame(coverMask);
 	var Ele = document.getElementById('maskCanvas');
         var context = Ele.getContext('2d');
         //마스크 셋팅//
@@ -195,9 +195,31 @@ function confirmSticker()
 	
 	document.getElementById('editCanvas').style.pointerEvents = 'none';
 	resetEditCanvas();
+	storeStep();
 }
 
+function resetSticker()
+{
+	console.log('resetSticker');
+	resetEditCanvas();
+	
+	var backCan = document.getElementById('myCanvas');
+	var backContext = backCan.getContext('2d');
+	
+	var imageObj = new Image();
+		imageObj.onload = function()
+		{
+			backContext.drawImage(imageObj, 0,0);
+		}
+	imageObj.src = savedBackground;
+}
 
+function resetEditCanvas()
+{
+	var editCanvas = document.getElementById('editCanvas');
+	var editContext = editCanvas.getContext('2d');
+	editContext.clearRect(0,0,canvasWidth,canvasHeight);
+}
 
 function drawLine(e) 
 {
@@ -247,8 +269,13 @@ function endCoordinate(e)
 
 function changeColor(e) 
 {
+	//스티커 만들다가 색 변경시
+	if (isSticker) {
+		confirmSticker();
+	}
 	//고쳐>흐트믈 color로 바꿀까
         var ele = e.target;
+	
         if (mine.isPen == true) 
         {
                 mine.strokestyle = ele.style.background;
@@ -349,13 +376,6 @@ function init()
         first.fillRect(0,0,canvasWidth,canvasHeight);
 }
 
-//----Edit canvas--------//
-function resetEditCanvas()
-{
-	var editCanvas = document.getElementById('editCanvas');
-	var editContext = editCanvas.getContext('2d');
-	editContext.clearRect(0,0,canvasWidth,canvasHeight);
-}
 
 function postCanvasToURL() 
 {
@@ -398,11 +418,17 @@ function showColorHexes()
 
 function clearCanvas() 
 {
+	//원상태로 돌리되 step만 저장함.
 	storeStep();
-        var can = document.getElementById('myCanvas');
-        var context = can.getContext('2d');
+        var backCan = document.getElementById('myCanvas');
+        var backCont = backCan.getContext('2d');
         
-        context.clearRect(0,0,can.width,can.height);
+	//스티커 편집중이었다면
+	document.getElementById('stickerUI').style.display = 'none';
+	resetEditCanvas();
+	
+        backCont.fillStyle='white';
+	backCont.fillRect(0,0,canvasWidth,canvasHeight);	
 }
 
 //----UNDO , REDO----//
@@ -468,7 +494,8 @@ function redoStep()
 
 
                 
-function showPreview(){  
+function showPreview(){
+	//조심해>>이부분 최적화할것.
         var can = document.getElementById('myCanvas');
         var dataURL = can.toDataURL();
 	var texture;
@@ -587,6 +614,8 @@ window.addEventListener('load',function(){
         var context = Ele.getContext('2d');
 	var preview = document.getElementById('preview');
 	var editCanvas = document.getElementById('editCanvas');
+	var confirmbtn = document.getElementById('confirmSticker');
+	var resetSbtn = document.getElementById('resetSticker');
         
 	document.onselectstart = new Function('return false');
         init();
@@ -616,7 +645,8 @@ window.addEventListener('load',function(){
 	editCanvas.addEventListener('mousedown',startSticker,false);
 	editCanvas.addEventListener('mousemove',moveSticker,false);
 	editCanvas.addEventListener('mouseup',endSticker,false);
-	stickerUI.addEventListener('mousedown',confirmSticker,false);
+	confirmbtn.addEventListener('mousedown',confirmSticker,false);
+	resetSbtn.addEventListener('mousedown',resetSticker,false);
 	
 	
 	//----3D MODEL-----//

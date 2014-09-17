@@ -36,14 +36,26 @@
 		
 		<div id="wrapper">	
 			<div id="canvas_area">
-				<canvas id="myCanvas" width=500 height=500 style="position: absolute; z-index: 0"></canvas>
-				<canvas id="editCanvas" width=500 height=500 style="position: absolute; z-index: 1;pointer-events: none;"></canvas>
-				<canvas id="maskCanvas" width=500 height=500 style="position: absolute; z-index: 2;pointer-events: none;"></canvas>
+				<canvas id="myCanvas" width=500 height=500></canvas>
+				<canvas id="editCanvas" width=500 height=500 style="pointer-events: none;"></canvas>
+				<canvas id="maskCanvas" width=500 height=500 style="pointer-events: none;"></canvas>
 				
-				<div id="stickerUI" style="position: absolute; margin-top: 400px;width:100px;height: 100px;background: red; display: none; z-index: 3;color: white;">CONFIRM</div>
+				<div id="stickerUI" style="display: none;">
+					<div id="confirmSticker" class="eachStickerUI">CONFIRM</div>
+					<div id="resetSticker" class="eachStickerUI">RESET</div>
+				</div>
 			</div>
 			
 			<div id="preview">
+				<div id="previewUI">
+					<div id="pausePbtn">pause</div>
+					<div id="viewUI">
+						<span id="frontV"class="viewBtn">front</span>
+						<span id="leftV" class="viewBtn">left</span>
+						<span id="rightV"class="viewBtn">right</span>
+						<span id="backV" class="viewBtn">back</span>
+					</div>
+				</div>
 		
 			</div>
 		</div>

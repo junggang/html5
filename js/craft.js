@@ -602,14 +602,34 @@ function pauseRotation(e)
 	//이미 멈춰져 있으면 play한후 리턴
 	if (isPaused) {
 		isPaused = false;
-		e.target.innerHTML = 'pause';
+		document.getElementById('pausePbtn').innerHTML = 'pause';
 		return;
 	}
 	
 	
 	isPaused = true;
-	e.target.innerHTML = 'play';
-	console.log(preview_clicked);
+	document.getElementById('pausePbtn').innerHTML = 'play';
+	monsterMesh.rotation.set(0,meshRot,0);
+}
+
+function changeView(e)
+{
+	isPaused = true;
+	document.getElementById('pausePbtn').innerHTML = 'play';
+	switch (e.target.id) {
+		case 'frontV':
+			{meshRot = 0;}
+			break;
+		case 'leftV':
+			{meshRot = 90 * Math.PI / 180;}
+			break;
+		case 'rightV':
+			{meshRot = -90 * Math.PI / 180;}
+			break;
+		case 'backV':
+			{meshRot = 180 * Math.PI / 180;}
+			break;
+	}
 	monsterMesh.rotation.set(0,meshRot,0);
 }
 
@@ -674,6 +694,10 @@ window.addEventListener('load',function(){
 	preview.addEventListener('mouseup',previewReset,false);
 	//previewUI
 	$('pausePbtn').addEventListener('mousedown',pauseRotation,false);
+	$('frontV').addEventListener('mousedown',changeView,false);
+	$('leftV').addEventListener('mousedown',changeView,false);
+	$('rightV').addEventListener('mousedown',changeView,false);
+	$('backV').addEventListener('mousedown',changeView,false);
 	
 	
 	

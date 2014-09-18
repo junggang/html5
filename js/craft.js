@@ -2,7 +2,7 @@
 clicked = false;
 startX = 0;
 startY = 0;
-canvasWidth = 500;
+canvasWidth = 600;
 canvasHeight = 500;
 var img;
 
@@ -51,25 +51,6 @@ function clickStatus(e)
 }
 
 //----MASK------//
-function mask()
-{
-	//조심해>마스크 어떻게 하지. 그냥 다 그리고 씌우기 하면...
-        var Ele = document.getElementById('myCanvas');
-        var context = Ele.getContext('2d');
-        //마스크 셋팅//
-        var imageObj = new Image();
-        imageObj.onload = function()
-        {
-                context.drawImage(imageObj, 0,0,500,500);
-        }
-
-        imageObj.src = "images/test_blank.png";
-        //context.globalCompositeOperation='source-in';
-        
-        //console.log("MASK");
-        
-}
-
 function coverMask()
 {
 	//requestAnimationFrame(coverMask);
@@ -79,11 +60,24 @@ function coverMask()
         var imageObj = new Image();
         imageObj.onload = function()
         {
-                context.drawImage(imageObj, 0,0,500,500);
+                context.drawImage(imageObj, 0,0,canvasWidth,canvasHeight);
         }
 
-        imageObj.src = "images/test_blank.png";
+        imageObj.src = "images/mask_nemo.png";
 	
+}
+//----PREFABS-----//
+function loadPrefabs()
+{
+	var backCan = document.getElementById('myCanvas');
+        var backCont = backCan.getContext('2d');
+        
+	var imageObj = new Image();
+        imageObj.onload = function()
+        {
+		backCont.drawImage(imageObj, 0,0);
+        }
+        imageObj.src = "images/prefab_nemo0.png";
 }
 
 //----STICKER-----//
@@ -397,7 +391,7 @@ function exportCanvas()
         {
                 context.drawImage(coverObj, 48,128);
         }
-        coverObj.src = "images/test_blank.png";
+        coverObj.src = "images/mask_nemo_print.png";
 	
 	//logo image
 	var logo = new Image();
@@ -531,7 +525,7 @@ function undoStep()
         var imageObj = new Image();
         imageObj.onload = function()
         {
-                context.drawImage(imageObj, 0,0,500,500);
+                context.drawImage(imageObj, 0,0,canvasWidth,canvasHeight);
         }
 	imageObj.src = savedStep[idx];
 	
@@ -554,7 +548,7 @@ function redoStep()
         var imageObj = new Image();
         imageObj.onload = function()
         {
-                context.drawImage(imageObj, 0,0,500,500);
+                context.drawImage(imageObj, 0,0,canvasWidth,canvasHeight);
         }
 	imageObj.src = savedStep[idx];
 }
@@ -598,7 +592,7 @@ function init3D()
 	scene = new THREE.Scene();
 	
 	camera = new THREE.PerspectiveCamera(45, (previewWidth / previewHeight), 1, 1000);
-	camera.position.set(0,5,30);
+	camera.position.set(0,5,20);
 	camera.lookAt( scene.position );	
 	renderer.setClearColor(0xffffff, 1);
 	
@@ -626,7 +620,7 @@ function prepareModel()
 		scene.add(backModel);
 	});
 			      
-	loader.load( 'model/test1.dae', function ( collada ) {
+	loader.load( 'model/monster_nemo.dae', function ( collada ) {
 	var dae = collada.scene;
 	
 	monsterMesh = dae;
@@ -739,12 +733,13 @@ window.addEventListener('load',function(){
         Ele.addEventListener('mousemove',drawLine,false);
         
 	//TOOLS
+	$('prefabs').addEventListener('mousedown',loadPrefabs,false);
 	$('tool_picker').addEventListener('mousedown',changePenTool,false);
 	$('colorHex').addEventListener('mousedown',changeColor,false);
 	//$('penThickness').addEventListener('mousedown',changePenThickness,false);
 	penBar.addEventListener('change',function(){changePenThickness(penBar)},false);
         $('stickers').addEventListener('mousedown',putSticker,true);      
-        $('savebtn').addEventListener('click',saveCanvas,false);
+        //$('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
 	$('undobtn').addEventListener('click',undoStep,false);

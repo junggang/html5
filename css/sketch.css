@@ -45,6 +45,7 @@ div#colorSample{width:30px;height: 30px;border:5px solid white;background: red;m
 #stickers>span {background: yellow;margin-left: 2px;float: left;cursor: pointer;}
 #penThickness {width:180px;height: 30px;background: pink;margin: 10px;}
 #penThicker, #penThinner {cursor: pointer;}
+#tool_picker {clear:both; width: 180px;height: 40px;margin:10px;}
 
 
 /**PopUp**/

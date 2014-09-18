@@ -38,7 +38,8 @@ var mine =
         
         stepArray : new Array(),
         step : 0,
-        isPen : true
+        isPen : true,
+	pattern : new Image()
 }
         
 function clickStatus(e) 
@@ -239,7 +240,7 @@ function drawLine(e)
         context.lineJoin="round";
 
         //img=document.getElementById("colorPick");
-        pat=context.createPattern($('colorPick'),"repeat");
+        //mine.pattern=context.createPattern($('colorPick'),"repeat");
         
         context.strokeStyle = mine.strokestyle;
         //console.log(mine.strokestyle);
@@ -267,9 +268,42 @@ function endCoordinate(e)
         clicked = false;
 }
 
+function changePenTool(e) {
+	mine.isPen =true;
+	var ele = e.target.id;
+	switch (ele) {
+		case "pen":
+			showColorHexes();
+			mine.strokestyle = "#C44D58";
+			break;
+		case "crayon":
+			changeToCrayon();
+			mine.strokestyle = mine.pattern;
+			break;
+		case "eraser":
+			mine.strokestyle = "#ffffff";
+	}
+}
+
+function changeToCrayon()
+{
+	var con = document.getElementById('myCanvas');
+	var context = con.getContext('2d');
+	mine.isPen = false;
+	var nodes = document.getElementById('colorHex').childNodes;
+	for (var i = 0; i < 8; i++) {
+		var str = "url('images/color";
+		str = str.concat(i);
+		str = str.concat(".png')");
+		nodes[i].style.background=str;			
+	}
+	mine.pattern=context.createPattern($('colorPick'),"repeat");
+}
 
 function changeColor(e) 
 {
+	var can = document.getElementById('myCanvas');
+	var context = can.getContext('2d');
 	//스티커 만들다가 색 변경시
 	if (isSticker) {
 		confirmSticker();
@@ -285,8 +319,9 @@ function changeColor(e)
         else
         {
                 $('colorPick').src=ele.style.backgroundImage.slice(4, -1);
+		mine.pattern=context.createPattern($('colorPick'),"repeat");
                 //console.log($('colorPick').src);
-                mine.strokestyle = pat;
+                mine.strokestyle = mine.pattern;
                 //img=document.getElementById("colorPick");
         }
 }
@@ -685,6 +720,7 @@ window.addEventListener('load',function(){
         Ele.addEventListener('mousemove',drawLine,false);
         
 	//TOOLS
+	$('tool_picker').addEventListener('mousedown',changePenTool,false);
 	$('colorHex').addEventListener('mousedown',changeColor,false);
 	$('penThickness').addEventListener('mousedown',changePenThickness,false);
         $('stickers').addEventListener('mousedown',putSticker,true);      

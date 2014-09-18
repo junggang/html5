@@ -291,6 +291,19 @@ function changeColor(e)
         }
 }
 
+function changePenThickness(e)
+{
+	if (e.target.id == 'penThicker') {
+		mine.linewidth += 1;
+	}
+	if (e.target.id == 'penThinner') {
+		mine.linewidth -= 1;
+	}
+	
+	document.getElementById('penPre').innerHTML = mine.linewidth;
+}
+
+
 function saveCanvas() 
 {
         var can = document.getElementById('myCanvas');
@@ -670,9 +683,11 @@ window.addEventListener('load',function(){
         Ele.addEventListener('mouseout',endCoordinate,false);
         Ele.addEventListener('mouseup',endCoordinate,false);
         Ele.addEventListener('mousemove',drawLine,false);
-        $('colorHex').addEventListener('mousedown',changeColor,false);
+        
+	//TOOLS
+	$('colorHex').addEventListener('mousedown',changeColor,false);
+	$('penThickness').addEventListener('mousedown',changePenThickness,false);
         $('stickers').addEventListener('mousedown',putSticker,true);      
-   
         $('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);

@@ -1,15 +1,15 @@
 body{font-family: Verdana, Geneva, sans-serif; /**background-image: url('../images/craft_bg.png');**/}
-#roof { position: fixed; width: 100%; height: 115px; top: 0; left:0; background-image: url('../images/craft_roof1.png'); text-align: center;}
+#roof { position: fixed; width: 100%; height: 131px; top: 0; left:0; background-image: url('../images/craft_roof_new.png'); text-align: center;background-position: center;}
 #roof img { margin-top: 10px; }
 
 @media screen and (max-width:1200px) 
 {
-    #wrapper{ width:850px; margin-top : 130px; float: right; }
+    #wrapper{ width:850px; margin-top : 140px; float: right; }
 }
 
 @media screen and (min-width:1200px)
 {
-    #wrapper{ width:1000px; margin-top : 130px; float: right; }
+    #wrapper{ width:1000px; margin-top : 140px; float: right; }
 }
 
 /**Canvas**/
@@ -33,10 +33,10 @@ body{font-family: Verdana, Geneva, sans-serif; /**background-image: url('../imag
 .viewBtn {margin: 15px;}
     
 /**Tools**/
-#tools { float : left; margin-top : 130px; width: 200px;}
+#tools { float : left; margin-top : 140px; width: 200px;}
 #tool_area>div{border:1px solid #6A4A3C;}
 #color_picker {margin:10px;height: 120px;width: 100%;}
-div.colorhex{width: 30px;height: 30px;margin: 5px;float: left;border: 4px solid white;}
+div.colorhex{width: 30px;height: 30px;margin:;float: left;}
 div#colorSample{width:30px;height: 30px;border:5px solid white;background: red;margin:10px;}
 #stickers {width: 100%; margin:10px;}
 .button {color : black; cursor: pointer;width: 180px;height: 38px;clear:both;background: white;font-size: 30px;text-align: center;margin: 10px;border: 1px solid black;}

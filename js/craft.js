@@ -10,6 +10,7 @@ var savedStep = [];
 var removedStep = [];
 var emptyStep = [];
 maxStep = 10;
+colorNum=24;
 lastStep = false;
 
 //sticker
@@ -326,7 +327,7 @@ function changeColor(e)
         }
 }
 
-function changePenThickness(e)
+function changePenThickness1(e)
 {
 	if (e.target.id == 'penThicker') {
 		mine.linewidth += 1;
@@ -335,7 +336,19 @@ function changePenThickness(e)
 		mine.linewidth -= 1;
 	}
 	
-	document.getElementById('penPre').innerHTML = mine.linewidth;
+	document.getElementById('penPre').style.width = mine.linewidth+'px';
+	document.getElementById('penPre').style.height = mine.linewidth+'px';
+	document.getElementById('penPre').style.marginTop = (30-mine.linewidth)/2 + 'px';
+	
+}
+
+function changePenThickness(rangeVal)
+{
+	mine.linewidth = rangeVal.value;
+	
+	document.getElementById('penPre').style.width = mine.linewidth+'px';
+	document.getElementById('penPre').style.height = mine.linewidth+'px';
+	document.getElementById('penPre').style.marginTop = (30-mine.linewidth)/2 + 'px';
 }
 
 
@@ -364,19 +377,27 @@ function exportCanvas()
 {
 	var can = document.getElementById('myCanvas');
         var dataURL = can.toDataURL();
-	
+		
 	var Ele = document.getElementById('exportCanvas');
         var context = Ele.getContext('2d');
         context.fillStyle = "white";
         context.fillRect(0,0,595,842);
+	var backArea = $('exportPop').childNodes[1];
+
         
 	var imageObj = new Image();
         imageObj.onload = function()
         {
                 context.drawImage(imageObj, 48,128);
         }
-
         imageObj.src = dataURL;
+	
+	var coverObj = new Image();
+        coverObj.onload = function()
+        {
+                context.drawImage(coverObj, 48,128);
+        }
+        coverObj.src = "images/test_blank.png";
 	
 	//logo image
 	var logo = new Image();
@@ -384,18 +405,15 @@ function exportCanvas()
         {
                 context.drawImage(logo, 0,0);
         }
-
         logo.src = "images/export_logo.png";
 	
 	//make print-out
 	var printURL = Ele.toDataURL();
 	
-	//window.win = open(printURL, "_self");
-        //setTimeout('win.document.execCommand("Print")', 500);
-	
 	showPop("exportPop");
-	$('printbtn').addEventListener('click',function(){window.win=open(printURL)},false);
-	//backArea.addEventListener('click',function(){ $('savePop').style.display="none";},false);
+	backArea.addEventListener('click',function()
+                { $('exportPop').style.display="none";},false);
+	
 }
 
 function restoreCanvas() 
@@ -437,7 +455,7 @@ function postCanvasToURL()
 function showColorPalette() 
 {
         var str= "";
-        for (var i = 0;i<8;i++) 
+        for (var i = 0;i<colorNum;i++) 
         {
                 str = str.concat("<div class='colorhex' ");
                 str = str.concat("style='background:white'></div>");
@@ -702,6 +720,7 @@ window.addEventListener('load',function(){
 	var editCanvas = document.getElementById('editCanvas');
 	var confirmbtn = document.getElementById('confirmSticker');
 	var resetSbtn = document.getElementById('resetSticker');
+	var penBar = document.getElementById('penBar');
 	
         
 	document.onselectstart = new Function('return false');
@@ -722,7 +741,8 @@ window.addEventListener('load',function(){
 	//TOOLS
 	$('tool_picker').addEventListener('mousedown',changePenTool,false);
 	$('colorHex').addEventListener('mousedown',changeColor,false);
-	$('penThickness').addEventListener('mousedown',changePenThickness,false);
+	//$('penThickness').addEventListener('mousedown',changePenThickness,false);
+	penBar.addEventListener('change',function(){changePenThickness(penBar)},false);
         $('stickers').addEventListener('mousedown',putSticker,true);      
         $('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);

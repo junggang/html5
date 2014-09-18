@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<div id="roof">
-			<img src="images/craft_title1.png" class="center"/>
+			<img src="images/craft_title.png" class="center"/>
 		</div>
 		
 		<div id="tools">
@@ -30,9 +30,11 @@
 				<div id="color_picker">
 					<div id="colorHex"></div>	
 				</div>
-				<div id="penThickness">펜두께
-					<span id="penThicker">(+)</span> <span id="penThinner">(-)</span>
-					<div id="penPre" style="background: yellow;float: right;width: 30px;height: 30px;">10</div>
+				<div id="penThickness">
+					<input type="range" id="penBar" min="1" max="30" value="10">
+					<div style="background: yellow;float: right;width: 30px;height: 30px;">
+						<div id="penPre" style="width:10px;height: 10px;border-radius: 100%;background: black;margin: 0 auto;margin-top:10px;"></div>
+					</div>
 				</div>
 				
 				<div id="stickers">
@@ -73,7 +75,7 @@
 			
 		
 		<img id ="colorPick" src="images/color0.png" style="visibility: hidden"/>
-		<div id="savePop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none">
+		<div id="savePop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
 			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
 			<div id="imgPop">
 				<img id="canvasImg" src="" class="popImg"/>
@@ -81,11 +83,12 @@
 			</div>	
 		</div>
 		
-		<div id="exportPop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none">
+		<div id="exportPop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
 			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
 			<div id="imgExport">
 				<canvas id="exportCanvas" width=595 height=842 style="width:75%;height: 75%"></canvas>
 				<img id="exportImg" src=""/>
+				<div class="button" id="printbtn">printbtn</div>
 			</div>	
 		</div>
 		

@@ -501,11 +501,11 @@ function showPreview(){
         var dataURL = can.toDataURL();
 	var texture;
 	
-	if (monsterMesh == undefined|| isPaused == true) {
+	if (monsterMesh == undefined) {
 		return;
 	}
 	
-	if (preview_clicked == false) {
+	if (preview_clicked == false && isPaused == false) {
 		meshRot += 0.005;
 		monsterMesh.rotation.set(0,meshRot,0);
 	}

@@ -14,21 +14,21 @@
     <image id="colored_png" name="colored_png">
       <init_from>colored.png</init_from>
     </image>
-    <image id="colored_PNG" name="colored_PNG">
+    <image id="colored_png" name="colored_png">
       <init_from>colored.PNG</init_from>
     </image>
   </library_images>
   <library_effects>
     <effect id="nemo-effect">
       <profile_COMMON>
-        <newparam sid="colored_PNG-surface">
+        <newparam sid="colored_png-surface">
           <surface type="2D">
-            <init_from>colored_PNG</init_from>
+            <init_from>colored_png</init_from>
           </surface>
         </newparam>
-        <newparam sid="colored_PNG-sampler">
+        <newparam sid="colored_png-sampler">
           <sampler2D>
-            <source>colored_PNG-surface</source>
+            <source>colored_png-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
@@ -40,7 +40,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <texture texture="colored_PNG-sampler" texcoord="UVMap"/>
+              <texture texture="colored_png-sampler" texcoord="UVMap"/>
             </diffuse>
             <index_of_refraction>
               <float sid="index_of_refraction">1</float>

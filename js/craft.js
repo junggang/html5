@@ -78,6 +78,10 @@ function loadPrefabs()
 		backCont.drawImage(imageObj, 0,0);
         }
         imageObj.src = "images/prefab_nemo0.png";
+	
+	//이거 안 먹냐 왜?
+	storeStep();
+	
 }
 
 //----STICKER-----//
@@ -308,7 +312,8 @@ function changeColor(e)
 	
         if (mine.isPen == true) 
         {
-                mine.strokestyle = ele.style.background;
+		document.getElementById('penPre').style.background = ele.style.background;
+		mine.strokestyle = ele.style.background;
                 //e.target.style.border = "4px solid #6A4A3C";
         }
         else

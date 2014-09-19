@@ -44,7 +44,9 @@
 					<span id="sticker_flower">FLOWER</span>	   <span id="sticker_zigzag">ZIGZAG</span>
 				</div>			
 				<div id="exportbtn" class="button">export</div>
+				<div id="sharebtn" class="button">share</div>
 				<div id="clearbtn" class="button">clear</div>
+				<div id="gallerybtn" class="button">gallery</div>
 		</div>
 		
 		<div id="wrapper">	
@@ -76,6 +78,23 @@
 			
 		
 		<img id ="colorPick" src="images/color0.png" style="visibility: hidden"/>
+		
+		<div id="sharePop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
+			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
+			<div id="imgShare">
+				<form method="post" enctype="multipart/form-data" name="addroom" data-ajax="false" style="width: 900px;background: yellow;">
+					<canvas id="shareCanvas" width=600 height=500 style="float: left"></canvas>
+					<div style="width: 250px;margin-left: 20px;background: pink; float: left;">
+						<h1>Share your monster</h1>
+						<input type="text" name="username" placeholder="name"><br>
+						<textarea name="description" placeholder="Decscription"></textarea>
+						<input id="imageInput" type="text" name="imageData" hidden="true">
+						<input type="submit" class="button" id="submit" value="submit">
+					</div>
+					
+				</form>
+			</div>	
+		</div>
 		
 		<div id="exportPop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
 			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>

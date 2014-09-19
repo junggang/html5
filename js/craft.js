@@ -372,6 +372,41 @@ function saveCanvas()
         console.log("saved");
 }
 
+function shareCanvas()
+{
+	var can = document.getElementById('myCanvas');
+        //var context = can.getContext('2d');
+        var dataURL = can.toDataURL();
+        var backArea = $('sharePop').childNodes[1];
+	
+	var Ele = document.getElementById('shareCanvas');
+        var context = Ele.getContext('2d');
+        
+	var imageObj = new Image();
+        imageObj.onload = function()
+        {
+                context.drawImage(imageObj, 0,0);
+        }
+        imageObj.src = dataURL;
+	
+	var coverObj = new Image();
+        coverObj.onload = function()
+        {
+                context.drawImage(coverObj, 0,0);
+        }
+        coverObj.src = "images/share_nemo.png";
+	
+	var fileURL = Ele.toDataURL();
+	document.getElementById('imageInput').value = fileURL;
+	
+	
+        //$('shareImg').src = dataURL;
+        showPop("sharePop");
+        
+        backArea.addEventListener('click',function()
+                { $('sharePop').style.display="none";},false);
+}
+
 function exportCanvas()
 {
 	var can = document.getElementById('myCanvas');
@@ -746,7 +781,9 @@ window.addEventListener('load',function(){
         $('stickers').addEventListener('mousedown',putSticker,true);      
         //$('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);
+	$('sharebtn').addEventListener('click',shareCanvas,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
+	$('gallerybtn').addEventListener('click',function(){window.location.href = "gallery.html"},false);
 	$('undobtn').addEventListener('click',undoStep,false);
 	$('redobtn').addEventListener('click',redoStep,false);
 	coverMask();

@@ -39,7 +39,7 @@ body{font-family: Verdana, Geneva, sans-serif; /**background-image: url('../imag
 div.colorhex{width: 30px;height: 30px;margin:;float: left;}
 div#colorSample{width:30px;height: 30px;border:5px solid white;background: red;margin:10px;}
 #stickers {width: 100%; margin:10px;}
-.button {color : black; cursor: pointer;width: 180px;height: 38px;clear:both;background: white;font-size: 30px;text-align: center;margin: 10px;border: 1px solid black;}
+.button {color : black; cursor: pointer;width: 180px;height: 20px;clear:both;background: white;font-size: 12px;text-align: center;margin: 10px;border: 1px solid black;}
 #undobtn, #redobtn {color:Red;}
 #stickers {width:180px;}
 #stickers>span {background: yellow;margin-left: 2px;float: left;cursor: pointer;}
@@ -50,7 +50,7 @@ div#colorSample{width:30px;height: 30px;border:5px solid white;background: red;m
 
 /**PopUp**/
 
-#imgPop{position: absolute; left:50%; top:50%; margin-left: -275px; margin-top: -250px; }
+#imgShare>form {position: absolute; left:50%; top:50%; margin-left: -450px; margin-top: -250px; }
 #imgExport{ position: absolute; left:50%; top:50%; margin-left: -223px; margin-top: -315px;}
 a{ text-decoration: none; }
 

@@ -14,6 +14,7 @@ colorNum=24;
 lastStep = false;
 
 //sticker
+stickerNum = 7;
 var savedBackground;
 var currentSticker;
 isSticker = false;
@@ -85,34 +86,6 @@ function loadPrefabs()
 }
 
 //----STICKER-----//
-var stickerSources = 
-{
-        sticker_zigzag: 'images/sticker_zigzag.png',
-        sticker_flower: 'images/sticker_flower.png'
-};
-
-function loadStickers(stickerSources, callback) 
-{			
-        var images = {};
-        var loadedStickers = 0;
-        var stickerNum = 0;
-        for(var src in stickerSources) 
-        {
-          stickerNum++;
-        }
-        for(var src in stickerSources) 
-        {
-                images[src] = new Image();
-                images[src].onload = function() 
-                {
-                        if(++loadedStickers >= stickerNum) 
-                        {
-                                callback(images);
-                        }
-                };
-        images[src].src = stickerSources[src];
-        }
-}
 
 function putSticker(e)
 {
@@ -131,7 +104,7 @@ function putSticker(e)
 	
         var Ele = document.getElementById('editCanvas');
         var context = Ele.getContext('2d');
-        var stickerName = e.target.id;
+        var stickerName = e.target.src;
         var imageObj = new Image();
 	currentSticker = imageObj;
 	
@@ -143,7 +116,7 @@ function putSticker(e)
 
         }
 
-        imageObj.src = "images/"+stickerName+".png";
+        imageObj.src = stickerName;
 	//조심해>드래그한 후 놓을 때 storeStep해줘야 함.
 }
 
@@ -396,8 +369,8 @@ function shareCanvas()
         }
         coverObj.src = "images/share_nemo.png";
 	
-	var fileURL = Ele.toDataURL();
-	document.getElementById('imageInput').value = fileURL;
+	//var fileURL = Ele.toDataURL();
+	//document.getElementById('imageInput').innerHTML = fileURL;
 	
 	
         //$('shareImg').src = dataURL;
@@ -406,6 +379,14 @@ function shareCanvas()
         backArea.addEventListener('click',function()
                 { $('sharePop').style.display="none";},false);
 }
+
+function getCanvasURL()
+{
+	var Ele = document.getElementById('shareCanvas');
+	var fileURL = Ele.toDataURL();
+	document.getElementById('imageInput').innerHTML = fileURL;
+}
+
 
 function exportCanvas()
 {
@@ -510,12 +491,42 @@ function showColorHexes()
                         var obj = JSON.parse(sResult);
                         for (var i=0;i<obj.length;i++) 
                         {
-                                console.log(obj[i]);
                                 nodes[i].style.background=obj[i];
                         }
                 }
         }
 }
+
+function addStickers()
+{
+	var str = "";
+	for( var i = 0; i<stickerNum;i++)
+	{
+		str = str.concat("<img class='stickerPreview' ");
+		str = str.concat("style='float:left;width:45px;height:45px;margin:5px;' src=''/>");
+	}
+	$('stickers').innerHTML = str;
+}
+
+function getStickers()
+{
+	var request = new XMLHttpRequest();
+        request.open("GET", "stickerSet.json",true);
+        request.send(null);
+        var nodes = document.getElementById('stickers').childNodes;
+        request.onreadystatechange = function(){
+                if (request.readyState == 4 && request.status == 200) 
+                {
+                        var sResult = request.responseText;
+                        var obj = JSON.parse(sResult);
+                        for (var i=0;i<obj.length;i++) 
+                        {
+                                nodes[i].src="images/"+obj[i]+".png";
+                        }
+                }
+        }
+}
+
 
 function clearCanvas() 
 {
@@ -773,6 +784,9 @@ window.addEventListener('load',function(){
         Ele.addEventListener('mousemove',drawLine,false);
         
 	//TOOLS
+	addStickers();
+	getStickers();
+	
 	$('prefabs').addEventListener('mousedown',loadPrefabs,false);
 	$('tool_picker').addEventListener('mousedown',changePenTool,false);
 	$('colorHex').addEventListener('mousedown',changeColor,false);
@@ -782,6 +796,7 @@ window.addEventListener('load',function(){
         //$('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);
 	$('sharebtn').addEventListener('click',shareCanvas,false);
+	$('descr').addEventListener('focus',getCanvasURL,false);
         $('clearbtn').addEventListener('click',clearCanvas,false);
 	$('gallerybtn').addEventListener('click',function(){window.location.href = "gallery.html"},false);
 	$('undobtn').addEventListener('click',undoStep,false);

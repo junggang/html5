@@ -14,7 +14,7 @@ colorNum=24;
 lastStep = false;
 
 //sticker
-stickerNum = 7;
+stickerNum = 10;
 var savedBackground;
 var currentSticker;
 isSticker = false;
@@ -68,17 +68,18 @@ function coverMask()
 	
 }
 //----PREFABS-----//
-function loadPrefabs()
+function loadPrefabs(e)
 {
 	var backCan = document.getElementById('myCanvas');
         var backCont = backCan.getContext('2d');
+	var prefab = e.target.src;
         
 	var imageObj = new Image();
         imageObj.onload = function()
         {
 		backCont.drawImage(imageObj, 0,0);
         }
-        imageObj.src = "images/prefab_nemo0.png";
+        imageObj.src = prefab;
 	
 	//이거 안 먹냐 왜?
 	storeStep();
@@ -299,7 +300,7 @@ function changeColor(e)
         }
 }
 
-function changePenThickness1(e)
+function changePenThickness(e)
 {
 	if (e.target.id == 'penThicker') {
 		mine.linewidth += 1;
@@ -310,19 +311,9 @@ function changePenThickness1(e)
 	
 	document.getElementById('penPre').style.width = mine.linewidth+'px';
 	document.getElementById('penPre').style.height = mine.linewidth+'px';
-	document.getElementById('penPre').style.marginTop = (30-mine.linewidth)/2 + 'px';
+	document.getElementById('penPre').style.marginTop = (50-mine.linewidth)/2 + 'px';
 	
 }
-
-function changePenThickness(rangeVal)
-{
-	mine.linewidth = rangeVal.value;
-	
-	document.getElementById('penPre').style.width = mine.linewidth+'px';
-	document.getElementById('penPre').style.height = mine.linewidth+'px';
-	document.getElementById('penPre').style.marginTop = (30-mine.linewidth)/2 + 'px';
-}
-
 
 function saveCanvas() 
 {
@@ -423,12 +414,22 @@ function exportCanvas()
         logo.src = "images/export_logo.png";
 	
 	//make print-out
-	var printURL = Ele.toDataURL();
+	setTimeout(makeURL,100);
 	
 	showPop("exportPop");
 	backArea.addEventListener('click',function()
                 { $('exportPop').style.display="none";},false);
 	
+}
+
+function makeURL()
+{
+	var Ele = document.getElementById('exportCanvas');
+	var saveBTN = $('exportPop').querySelector('a');
+	var printURL = Ele.toDataURL();
+	
+	saveBTN.href=printURL;
+	saveBTN.download="image";
 }
 
 function restoreCanvas() 
@@ -526,6 +527,38 @@ function getStickers()
                 }
         }
 }
+
+function addPrefabs()
+{
+	var str = "";
+	for( var i = 0; i<10;i++)
+	{
+		str = str.concat("<img class='prefabPreview' ");
+		str = str.concat("style='float:left;width:40px;height:50px;margin:5px;' src=''/>");
+	}
+	$('prefabs').innerHTML = str;
+}
+
+function getPrefabs()
+{
+	var request = new XMLHttpRequest();
+        request.open("GET", "prefabSet.json",true);
+        request.send(null);
+        var nodes = document.getElementById('prefabs').childNodes;
+        request.onreadystatechange = function(){
+                if (request.readyState == 4 && request.status == 200) 
+                {
+                        var sResult = request.responseText;
+                        var obj = JSON.parse(sResult);
+                        for (var i=0;i<obj.length;i++) 
+                        {
+                                nodes[i].src="images/"+obj[i]+".png";
+                        }
+                }
+        }
+}
+
+
 
 
 function clearCanvas() 
@@ -787,11 +820,13 @@ window.addEventListener('load',function(){
 	addStickers();
 	getStickers();
 	
+	addPrefabs();
+	getPrefabs();
+	
 	$('prefabs').addEventListener('mousedown',loadPrefabs,false);
 	$('tool_picker').addEventListener('mousedown',changePenTool,false);
 	$('colorHex').addEventListener('mousedown',changeColor,false);
-	//$('penThickness').addEventListener('mousedown',changePenThickness,false);
-	penBar.addEventListener('change',function(){changePenThickness(penBar)},false);
+	$('changeThickness').addEventListener('mousedown',changePenThickness,false);
         $('stickers').addEventListener('mousedown',putSticker,true);      
         //$('savebtn').addEventListener('click',saveCanvas,false);
 	$('exportbtn').addEventListener('click',exportCanvas,false);

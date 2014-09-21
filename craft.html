@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>test</title>
+		<title>Moncraft</title>
 		
 		<link rel="stylesheet" type="text/css" href="css/sketch.css">
 		
@@ -15,39 +15,52 @@
 	<body>
 		<div id="roof">
 			<img src="images/craft_title.png"/>
+			<img style="float:right;margin-right: 15px;"src="images/notice.png"/>
 		</div>
 		
 		<div id="tools">
-				<div id="prefabs" class="button">PREFABS</div>
-
-				
-				
-				<div id="tool_picker">
-					<img id = "pen" style="float: left;" src ="images/tool_pen.png"/>
-					<img id = "crayon" style="float: left;" src ="images/tool_crayon.png"/>
-					<img id = "eraser" style="float: left;" src ="images/tool_eraser.png"/>
-				</div>
-				
-				<div id="color_picker">
-					<div id="colorHex"></div>	
-				</div>
-				<div id="penThickness">
-					<input type="range" id="penBar" min="1" max="30" value="10">
-					<div style="background: yellow;float: right;width: 30px;height: 30px;">
-						<div id="penPre" style="width:10px;height: 10px;border-radius: 100%;background: black;margin: 0 auto;margin-top:10px;"></div>
-					</div>
-				</div>
-				
+			<div class="pointcursor" style="width: 210px;margin:10px;height: 40px;">
 				<img id="undobtn" class="stepbutton" src="images/tool_undo.png">
 				<img id="redobtn" class="stepbutton" src="images/tool_redo.png">
 				<img id="clearbtn" class="stepbutton" src="images/tool_clear.png">
+			</div>
+			
+			<div id="brushtools">
+				<div id="tool_picker" class="pointcursor" >
+					<img id = "pen" src ="images/tool_pen.png"/>
+					<img id = "crayon" src ="images/tool_crayon.png"/>
+					<img id = "eraser" src ="images/tool_eraser.png"/>
+				</div>
+				<div id="penThickness">
+					<div style="float:left;width: 40px;height: 50px;">
+						<div id="penPre" style="width:10px;height: 10px;border-radius: 100%;background: black;margin: 0 auto;margin-top:20px;"></div>
+					</div>
+					<div id="changeThickness" style="float:right; width:17px;">
+						<img id="penThicker" src="images/tool_thicker.png"/>
+						<img id="penThinner" src="images/tool_thinner.png"/>						
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="color_picker">
+				<div id="colorHex" class="pointcursor" ></div>	
+			</div>
+			
+			
+			<div id="stickers"class="pointcursor" >
 				
-				<div id="stickers">
-					
-				</div>			
-				<div id="exportbtn" class="button">export</div>
-				<div id="sharebtn" class="button">share</div>
-				<div id="gallerybtn" class="button">gallery</div>
+			</div>
+			
+			<div id="prefabs"class="pointcursor" >
+				
+			</div>
+			
+			<div style="width: 210px;margin:10px;height: 40px;">
+				<img class="pointcursor" id="exportbtn" style="float:left;" src="images/tool_print.png"/>
+				<img class="pointcursor" id="sharebtn" style="float:left;" src="images/tool_share.png"/>
+				<img class="pointcursor" id="gallerybtn" style="float:left;" src="images/tool_gallery.png"/>
+			</div>
 		</div>
 		
 		<div id="wrapper">	
@@ -83,9 +96,9 @@
 		<div id="sharePop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
 			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
 			<div id="imgShare">
-				<form action="addexec.php" method="post"  enctype="multipart/form-data" name="addroom" style="width: 900px;background: yellow;">
+				<form action="addexec.php" method="post"  enctype="multipart/form-data" name="addroom" style="width: 900px;background: white;">
 					<canvas id="shareCanvas" width=600 height=500 style="float: left"></canvas>
-					<div style="width: 250px;margin-left: 20px;background: pink; float: left;">
+					<div style="width: 250px;margin-left: 20px; float: left;">
 						<h1>Share your monster</h1>
 						<input type="text" name="username" placeholder="name"><br>
 						<textarea name="description" id="descr" placeholder="Decscription" maxlength="200"></textarea>
@@ -99,11 +112,14 @@
 		
 		<div id="exportPop" style="position: fixed;left:0;top:0;width: 100%;height:100%;display: none;z-index: 10;">
 			<div style="position: absolute;left:0;top:0;width: 100%;height: 100%;opacity:0.7;background: grey;"></div>
+			
 			<div id="imgExport">
-				<canvas id="exportCanvas" width=595 height=842 style="width:75%;height: 75%"></canvas>
-				<img id="exportImg" src=""/>
-				<div class="button" id="printbtn">printbtn</div>
-			</div>	
+				<canvas id="exportCanvas" class="myDivToPrint" width=595 height=842 style="width: 75%;height: 75%;"></canvas>
+			</div>
+			
+			<div style="width:446px;height: 80px;background: black; opacity: 0.5;position: absolute; text-align: center;left:50%; top:50%; margin-left: -223px; margin-top: -90px;">
+				<a id="printbtn"><h1 style="cursor: pointer;color:white;">save and then, PRINT!</h1></a>
+			</div>
 		</div>
 		
 		<a href="#" onclick="postCanvasToURL()">

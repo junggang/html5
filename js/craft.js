@@ -49,6 +49,13 @@ function clickStatus(e)
         clicked = true;
         startX = e.offsetX;
         startY = e.offsetY;
+	
+	if (mine.isPen==false) {
+		var can = document.getElementById('myCanvas');
+		var context = can.getContext('2d');	
+		context.fillStyle = mine.strokestyle;
+		context.fillRect(0,0,canvasWidth,canvasHeight);
+	}
 }
 
 //----MASK------//
@@ -218,6 +225,11 @@ function drawLine(e)
         context.strokeStyle = mine.strokestyle;
         //console.log(mine.strokestyle);
         
+	if (mine.isPen==false) {
+		return;
+	}
+	
+	
         context.beginPath();
         
         context.lineWidth = mine.linewidth;
@@ -242,18 +254,23 @@ function endCoordinate(e)
 }
 
 function changePenTool(e) {
+	var con = document.getElementById('myCanvas');
+
 	mine.isPen =true;
 	var ele = e.target.id;
 	switch (ele) {
 		case "pen":
+			con.style.cursor = "default";
 			showColorHexes();
 			mine.strokestyle = "#C44D58";
 			break;
 		case "crayon":
+			con.style.cursor = "url('images/icon_paint.gif'),auto";
 			changeToCrayon();
 			mine.strokestyle = mine.pattern;
 			break;
 		case "eraser":
+			con.style.cursor = "default";
 			mine.strokestyle = "#ffffff";
 	}
 }
@@ -263,14 +280,6 @@ function changeToCrayon()
 	var con = document.getElementById('myCanvas');
 	var context = con.getContext('2d');
 	mine.isPen = false;
-	var nodes = document.getElementById('colorHex').childNodes;
-	for (var i = 0; i < 8; i++) {
-		var str = "url('images/color";
-		str = str.concat(i);
-		str = str.concat(".png')");
-		nodes[i].style.background=str;			
-	}
-	mine.pattern=context.createPattern($('colorPick'),"repeat");
 }
 
 function changeColor(e) 
@@ -292,10 +301,7 @@ function changeColor(e)
         }
         else
         {
-                $('colorPick').src=ele.style.backgroundImage.slice(4, -1);
-		mine.pattern=context.createPattern($('colorPick'),"repeat");
-                //console.log($('colorPick').src);
-                mine.strokestyle = mine.pattern;
+                mine.strokestyle = ele.style.background;
                 //img=document.getElementById("colorPick");
         }
 }
@@ -330,7 +336,7 @@ function saveCanvas()
         backArea.addEventListener('click',function()
                 { $('savePop').style.display="none";},false);
         saveBTN.href=dataURL;
-        //prompt로 가능
+        //putStickermpt로 가능
         saveBTN.download="image";
         //context.save();
         console.log("saved");
@@ -503,9 +509,10 @@ function addStickers()
 	var str = "";
 	for( var i = 0; i<stickerNum;i++)
 	{
-		str = str.concat("<img class='stickerPreview' ");
+		str = str.concat("<img id='eachSticker' class='stickerPreview' ");
 		str = str.concat("style='float:left;width:45px;height:45px;margin:5px;' src=''/>");
 	}
+
 	$('stickers').innerHTML = str;
 }
 
@@ -526,6 +533,11 @@ function getStickers()
                         }
                 }
         }
+}
+
+function addMyPrefab(e)
+{
+	e.stopPropagation();
 }
 
 function addPrefabs()
